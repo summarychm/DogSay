@@ -7,8 +7,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "prop-types": "^15.6.0",
     "react": "16.2.0",
     "react-native": "0.52.1",
+    "react-native-tab-view": "0.0.74",
     "react-native-vector-icons": "^4.5.0"
   },
   "devDependencies": {
