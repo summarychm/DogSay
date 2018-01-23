@@ -11,6 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -23,6 +24,7 @@ export default class App extends Component<{}> {
   render() {
     return (
       <View style={styles.container}>
+        <Icon name="ios-person" size={30} color="#4F8EF7" />
         <Text style={styles.welcome}>
           Welcome to React Native!2018-1-23
         </Text>
