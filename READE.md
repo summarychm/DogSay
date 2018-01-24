@@ -16,3 +16,17 @@
 
 ## 使用到的库与插件
 
+* [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
+* [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view)
+* [styled-componentds](https://github.com/styled-components/styled-components)
+
+
+## 所用图标
+> ios-videocam-outline   
+> ios-videocam    
+> ios-recording-outline   
+> ios-recording   
+> ios-more-outline   
+> ios-more   
+
+

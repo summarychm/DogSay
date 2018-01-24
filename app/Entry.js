@@ -9,8 +9,7 @@ import {GGButton} from "ggdomain/component";
 // import Icon from 'react-native-vector-icons/Ionicons';
 
 //自定义的支持图标和文本一起显示的TabBar组件
-import TabBarBasic from './common/TabBarBasic'
-//import TabBarIconExample from './example/TabBarIconExample';
+import TabBarBasic from './domain/pages/common/TabBarBasic'
 
 const Video = () => (<Text>Video</Text>)
 const List = () => (<Text>List</Text>)
@@ -19,43 +18,44 @@ export default class Entry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 0,
-      routes: [
-        {key: "key1", title: "视频列表", icon: "ios-speedometer", Component: Video},
-        {key: "key2", title: "视频录制", icon: "ios-basketball", Component: List},
-        {key: "key3", title: "个人中心", icon: "ios-game-controller-b", Component: User}
-      ],
+      index: 2,
+      selectedTab:2
     };
+    this.tabRouters=[{
+      key: "videocam",
+      //title: "视频列表",
+      iconName: "ios-videocam-outline",
+      selectedIconName: "ios-videocam",
+      Component: Video
+    }, {
+      key: "recording",
+      //title: "视频录制",
+      iconName: "ios-recording-outline",
+      selectedIconName: "ios-recording",
+      Component: List
+    }, {
+      key: "userinfo",
+      // title: "个人中心",
+      iconName: "ios-more-outline",
+      selectedIconName: "ios-more",
+      Component: User
+    }]
   }
 
   render() {
+    console.log(11);
     return (
       <View style={styles.container}>
-        <TabBarBasic tabs={this.state} handleIndexChange={this.handleIndexChange} />
+        <TabBarBasic  index={this.state.index} routes={this.tabRouters}  handleIndexChange={this.handleIndexChange}/>
       </View>
-
     )
-    
-    /*
-    <Text>测试页面</Text>
-        <Text>测试页面</Text>
-        <GGButton backgroundColor={"red"} loading={this.state.loading} onPress={this.onPress} >测试按钮</GGButton>
-    
-    let tabAry = [
-      {title: "视频列表", iconName: "ios-speedometer"},
-      {title: "视频录制", iconName: "ios-basketball"},
-      {title: "个人中心", iconName: "ios-game-controller-b"}
-    ];
-    return (
-      <View style={styles.container}>
-        <Text>View</Text>
-        <BottomTabBar/>
-      </View>
-    );*/
   }
   handleIndexChange = (index) => {
+    console.log(index);
+
     this.setState({
-      index:index
+      index: index,
+      selectedTab:this.tabRouters[index].key
     })
   }
 }
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'center',
     // alignItems: 'center',
-    backgroundColor: '#dd735c',
+  //  backgroundColor: '#dd735c',
   }
 });
 
