@@ -23,14 +23,12 @@
 
 
 ## 所用图标
-> ios-videocam-outline   
-> ios-videocam    
-> ios-recording-outline   
-> ios-recording   
-> ios-more-outline   
-> ios-more   
+> 使用的是
+> ios-videocam  / ios-videocam-outline   
+> ios-recording / ios-recording-outline   
+> ios-more / ios-more-outline    
 
-# Mock
+## Mock
 > 使用的是taobao的[Rap2](http://rap2.taobao.org)   
 > Mock根地址[http://rap2api.taobao.org/app/mock/4624/GET/creations](http://rap2api.taobao.org/app/mock/4624/GET/creations)
 

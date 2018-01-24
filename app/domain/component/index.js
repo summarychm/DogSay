@@ -1,3 +1,3 @@
 
 export * from './GGButton';
-export * from './TabBarBasic'
+export * from './GGTabBar'

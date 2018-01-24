@@ -13,7 +13,7 @@ import {COLOR_BUTTON} from 'ggdomain/def'
 const StyleTabViewAnimated = styled(TabViewAnimated)`
   background-color: #eee;
 `;
-export class TabBarBasic extends React.Component {
+export class GGTabBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +44,6 @@ export class TabBarBasic extends React.Component {
       />
     )
   }
-
   //渲染图标
   _renderIcon = ({route}) => {
     //如果是当前选中项,则切换为选中样式 style={styles.icon}

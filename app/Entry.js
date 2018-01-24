@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 
-import {GGButton,TabBarBasic} from "ggdomain/component";
+import {GGTabBar} from "ggdomain/component";
 import {Account,Creation,Edit} from 'ggdomain/pages';
 
 const StyleView=styled.View`
@@ -45,7 +45,7 @@ export default class Entry extends React.Component {
     console.log(11);
     return (
       <StyleView >
-        <TabBarBasic  index={this.state.index} routes={this.tabRouters}  handleIndexChange={this.handleIndexChange}/>
+        <GGTabBar  index={this.state.index} routes={this.tabRouters}  handleIndexChange={this.handleIndexChange}/>
       </StyleView>
     )
   }
