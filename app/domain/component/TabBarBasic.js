@@ -13,7 +13,7 @@ import {COLOR_BUTTON} from 'ggdomain/def'
 const StyleTabViewAnimated = styled(TabViewAnimated)`
   background-color: #eee;
 `;
-export default class TabBarBasic extends React.Component {
+export class TabBarBasic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
