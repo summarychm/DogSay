@@ -4,23 +4,19 @@ import {
   Text,
   View
 } from 'react-native';
-import styled from 'styled-components';
 
 import {GGTabBar} from "ggdomain/component";
-import {Account,Creation,Edit} from 'ggdomain/pages';
+import {Account, Creation, Edit} from 'ggdomain/pages';
 
-const StyleView=styled.View`
-  flex:1;
-`;
 
 export default class Entry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       index: 0,
-      selectedTab:"videocam"
+      selectedTab: "videocam"
     };
-    this.tabRouters=[{
+    this.tabRouters = [{
       key: "videocam",
       //title: "视频列表",
       iconName: "ios-videocam-outline",
@@ -42,19 +38,22 @@ export default class Entry extends React.Component {
   }
 
   render() {
-    console.log(11);
     return (
-      <StyleView >
-        <GGTabBar  index={this.state.index} routes={this.tabRouters}  handleIndexChange={this.handleIndexChange}/>
-      </StyleView>
+      <View style={styles.container}>
+        <GGTabBar index={this.state.index} routes={this.tabRouters} handleIndexChange={this.handleIndexChange}/>
+      </View>
     )
   }
+
   handleIndexChange = (index) => {
     this.setState({
       index: index,
-      selectedTab:this.tabRouters[index].key
+      selectedTab: this.tabRouters[index].key
     })
   }
 }
 
+const styles = StyleSheet.create({
+  container: {flex: 1}
+})
 

@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 import {Button} from "ggbasic";
-import {COLOR_BUTTON} from 'ggdomain/def';
+import {ConstStyle} from 'ggdomain/def';
 
 /**
  * 狗狗说APP所用Button按钮封装
@@ -18,7 +18,7 @@ export class GGButton  extends React.Component {
         height={42}
         width={Dimensions.get("window").width - 40}
         fontSize={14}
-        backgroundColor={COLOR_BUTTON}
+        backgroundColor={ConstStyle.Color_Main}
         {...this.props}
       >{this.props.children}</Button>);
   }

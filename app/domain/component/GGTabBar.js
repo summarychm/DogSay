@@ -7,12 +7,9 @@ import {
 import PropTypes from 'prop-types';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {TabViewAnimated, TabBar} from 'react-native-tab-view';
-import styled from 'styled-components';
-import {COLOR_BUTTON} from 'ggdomain/def'
 
-const StyleTabViewAnimated = styled(TabViewAnimated)`
-  background-color: #eee;
-`;
+import { ConstStyle } from 'ggdomain/def';
+
 export class GGTabBar extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +19,6 @@ export class GGTabBar extends React.Component {
       selectPageKey: 0
     }
   }
-
   static propTypes = {
     index: PropTypes.number,
     routes: PropTypes.array
@@ -36,7 +32,7 @@ export class GGTabBar extends React.Component {
       selectPageKey: routes[index].key
     }
     return (
-      <StyleTabViewAnimated
+      <TabViewAnimated
         navigationState={this.state}
         renderScene={({route}) => <route.Component/>}
         renderFooter={this._renderFooter}
@@ -49,7 +45,7 @@ export class GGTabBar extends React.Component {
     //如果是当前选中项,则切换为选中样式 style={styles.icon}
     let iconName = route.key === this.state.selectPageKey ? route.iconName : route.selectedIconName;
     return (
-      <Ionicons name={iconName} size={24} color={COLOR_BUTTON}/>
+      <Ionicons name={iconName} size={24} color={ConstStyle.Color_Main}/>
     );
   }
   //渲染Footer组件 getLabelText={({route}) => (route.title)}
@@ -58,7 +54,7 @@ export class GGTabBar extends React.Component {
       <TabBar
         {...props}
         renderIcon={this._renderIcon}
-        indicatorStyle={{backgroundColor: COLOR_BUTTON}}
+        indicatorStyle={{backgroundColor: ConstStyle.Color_Main}}
         style={{backgroundColor: '#eee'}}
       />
 
