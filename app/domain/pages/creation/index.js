@@ -6,22 +6,21 @@ import {
   View,
   Text,
   RefreshControl,
-  TouchableHighlight,
-  ImageBackground
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import {ConstStyle, Device, ConstURL} from 'ggdomain/def';
 
+import {ConstStyle, Device, ConstURL} from 'ggdomain/def';
 import {Request} from 'ggdomain/component';
 
+import {ItemComponent} from './ItemComponent';
 
+//创意视频列表页面
 export class Creation extends React.PureComponent {
   constructor(props) {
     super(props);
     this.localData = {
-      nextIndex: 1,
-      item: [],
-      total: 0
+      nextIndex: 1, //当前页面
+      item: [],  //已加载创意视频集合
+      total: 0 //在线创意视频总数
     };
     this.state = {
       isLoadingTail: false,//是否加载中
@@ -31,9 +30,6 @@ export class Creation extends React.PureComponent {
   }
 
   componentDidMount = () => {
-    this.setState({
-      isLoadingTail: true,
-    });
     this._fetchData(this.localData.nextIndex);
   }
 
@@ -82,38 +78,23 @@ export class Creation extends React.PureComponent {
     }
     return <ActivityIndicator style={styles.loadingMore}/>;
   }
+
+
+  //FlatList行渲染事件
+  _renderRow = (item) => {
+    return (
+      <ItemComponent item={item}/>
+    )
+  }
+
   //FlatList更新回调
   _onRefresh = () => {
     if (!this._hasMore() || this.state.isRefreshing)
       return;
     this._fetchData(-1);
   }
-  //FlatList行渲染事件
-  _renderRow = (item) => {
-    return (
-      <TouchableHighlight>
-        <View style={styles.item}>
-          <Text style={styles.title}>{item.title}</Text>
-          <ImageBackground source={{uri: item.thumb}} style={styles.thumb}>
-            <Ionicons name='ios-play' size={28} style={styles.player}/>
-          </ImageBackground>
-          <View style={styles.itemFooter}>
-            <View style={styles.handleBox}>
-              <Ionicons name='ios-heart-outline' size={28} style={styles.Icon}/>
-              <Text style={styles.handleText}>喜欢</Text>
-            </View>
-            <View style={styles.handleBox}>
-              {/*chatbubble*/}
-              <Ionicons name='ios-chatboxes-outline' size={28} style={styles.Icon}/>
-              <Text style={styles.handleText}>评论</Text>
-            </View>
-          </View>
-        </View>
-      </TouchableHighlight>
-    )
-  }
 
-  //滑动加载更多事件
+  //下滑加载更多事件
   _fetchMore = () => {
     //console.log("触发More");
     //加载更多创意视频数据
@@ -148,14 +129,15 @@ export class Creation extends React.PureComponent {
         return;
       }
       //如果是刷新就追加数据,如果是获取最新则将新数据前置
-      this.localData.item = (pageIndex > 0) ? this.localData.item.concat(responseJson.data) : responseJson.data.concat(this.localData.item);
-
+      let newData = this.localData.item.slice()
+      newData = (pageIndex > 0) ? newData.concat(responseJson.data) : responseJson.data.concat(newData);
+      this.localData.item = newData;
       this.localData.nextIndex += 1;
       this.localData.total = responseJson.total;
       this.setState({
         isLoadingTail: false,
         isRefreshing: false,
-        data: this.localData.item.slice()
+        data: newData
       });
     }).catch((error) => {
       console.error(error);
@@ -188,57 +170,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '600'
   },
-  item: {
-    width: Device.width,
-    marginBottom: 10,
-    backgroundColor: '#fff'
-  },
-  title: {
-    padding: 10,
-    fontSize: 18,
-    color: '#333'
-  },
-  thumb: {
-    width: Device.width,
-    height: Device.width * 0.56,
-  },
-  player: {
-    position: 'absolute',
-    bottom: 14,
-    right: 14,
-    width: 46,
-    height: 46,
-    paddingTop: 9,
-    paddingLeft: 18,
-    backgroundColor: 'transparent',
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderRadius: 23,
-    color: "#ed7b66"
-  },
-  //视频项底部footer
-  itemFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#eee'
-  },
-  handleBox: {
-    padding: 10,
-    flexDirection: 'row',
-    width: Device.width / 2 - 0.5,
-    justifyContent: 'center',
-    backgroundColor: '#fff'
-  },
 
-  Icon: {
-    fontSize: 22,
-    color: '#333'
-  },
-  handleText: {
-    paddingLeft: 12,
-    fontSize: 18,
-    color: '#333'
-  },
   loadingMore: {
     marginVertical: 20
   },

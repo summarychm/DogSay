@@ -19,7 +19,7 @@
 
 * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) (使用其中的Ionicons图标库)
 * [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view)(用来实现TabBar组件)
-* ~~[styled-componentds]~~(https://github.com/styled-components/styled-components)(用来替换原生的style)[放弃使用该插件,感觉对RN支持力度不够,使用繁琐]
+* ~~[styled-componentds](https://github.com/styled-components/styled-components)(用来替换原生的style)~~[放弃使用该插件,感觉对RN支持力度不够,使用繁琐]
 * [query-string](https://github.com/sindresorhus/query-string)(用来序列化网络请求参数)
 * [lodash](https://github.com/lodash/lodash)(使用lodash提供的很多实用方法)
 ## 所用图标
