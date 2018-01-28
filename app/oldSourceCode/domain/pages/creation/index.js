@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   ActivityIndicator,
   StyleSheet,
   FlatList,
@@ -15,6 +16,9 @@ import {ItemComponent} from './ItemComponent';
 
 //创意视频列表页面
 export class Creation extends React.PureComponent {
+  static navigationOptions = {
+    title: 'Welcome',
+  };
   constructor(props) {
     super(props);
     this.localData = {
@@ -25,6 +29,7 @@ export class Creation extends React.PureComponent {
     this.state = {
       isLoadingTail: false,//是否加载中
       isRefreshing: false,//是否刷新中
+      isVoted: false,
       data: []
     };
   }
@@ -83,7 +88,7 @@ export class Creation extends React.PureComponent {
   //FlatList行渲染事件
   _renderRow = (item) => {
     return (
-      <ItemComponent item={item}/>
+      <ItemComponent item={item} _votedFn={this._votedFn}/>
     )
   }
 
@@ -110,7 +115,7 @@ export class Creation extends React.PureComponent {
 
   //加载最新的创意视频信息
   _fetchData = (pageIndex) => {
-    console.log("pageIndex", pageIndex);
+    //  console.log("pageIndex", pageIndex);
     if (pageIndex > 0) {
       this.setState({
         isLoadingTail: true
@@ -120,8 +125,8 @@ export class Creation extends React.PureComponent {
         isRefreshing: true
       });
     }
-    Request.get(ConstURL.CREATIONS_GET, {
-      accesstoken: 'abc123',
+    Request.get(ConstURL.API.CREATIONS_GET, {
+      accesstoken: ConstURL.accessToken,
       index: pageIndex
     }).then((responseJson) => {
       if (!responseJson.success || !responseJson.data) {
@@ -151,6 +156,55 @@ export class Creation extends React.PureComponent {
   //判断是否还有更多视频
   _hasMore() {
     return this.localData.total > this.localData.item.length;
+  }
+
+  //点赞事件
+  _votedFn = (voted, row) => {
+    if (this.state.isVoted)
+      return;
+    this.setState({
+      isVoted: true
+    })
+    let body = {
+      id: row._id,
+      voted: voted,
+      accessToken: ConstURL.accessToken
+    }
+    Request.post(ConstURL.API.VOTED, body)
+      .then(res => {
+        if (res && res.success) {
+          let currentItem = this.localData.item.map(itemObj => {
+            return itemObj._id !== row._id ? itemObj : Object.assign({}, itemObj, {voted: voted})
+          })
+          this.localData.item = currentItem;
+          this.setState({
+            isVoted: false,
+            data: currentItem
+          })
+        }
+      }).catch(err => {
+      this.setState({
+        isVoted: false
+      });
+      console.log("点赞失败", err);
+      Alert.alert("点赞提示", "点赞失败!稍后提示.");
+    })
+    /* .then(response => {
+       console.log(response.success, this.localData.item);
+       /!* if (response && response.success) {
+          // var currentData = this.localData.item.map(itemObj => {
+          //   console.log("点赞回调", response);
+          //   console.log(row);
+          //   return itemObj;
+          //   //return itemObj._id !== item._id ? itemObj : Object.assign({}, itemObj, {voted: !voted});
+          // });
+          // console.log(currentData);
+          // this.setState({data: currentData})
+        } else {
+          Alert.alert("点赞提示", "点赞失败!稍后提示.");
+        }*!/
+     })*/
+    /**/
   }
 }
 

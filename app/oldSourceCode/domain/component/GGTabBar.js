@@ -10,6 +10,14 @@ import {TabViewAnimated, TabBar} from 'react-native-tab-view';
 
 import { ConstStyle } from 'ggdomain/def';
 
+import {Account, Creation, Edit} from 'ggdomain/pages';
+import {StackNavigator} from "react-navigation";
+const App = StackNavigator({
+  Creation: {screen: Creation},
+  Account: {screen: Account},
+});
+
+
 export class GGTabBar extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +42,10 @@ export class GGTabBar extends React.Component {
     return (
       <TabViewAnimated
         navigationState={this.state}
-        renderScene={({route}) => <route.Component/>}
+        renderScene={({route}) => {
+          return <App />
+          //return <route.Component/>
+        }}
         renderFooter={this._renderFooter}
         onIndexChange={this._handleIndexChange}
       />

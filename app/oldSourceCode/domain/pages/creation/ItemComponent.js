@@ -10,7 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import {ConstStyle, Device, ConstURL} from 'ggdomain/def';
 
 //创意视频列表项组件
-export const ItemComponent = ({item}) => {
+export const ItemComponent = ({item,_votedFn}) => {
   return (
     <TouchableHighlight>
       <View style={styles.itemContainer}>
@@ -19,9 +19,11 @@ export const ItemComponent = ({item}) => {
           <Ionicons name='ios-play' size={28} style={styles.player}/>
         </ImageBackground>
         <View style={styles.itemFooter}>
-          <View style={styles.handleBox}>
-            <Ionicons name='ios-heart-outline' size={28} style={styles.Icon}/>
-            <Text style={styles.handleText}>喜欢</Text>
+          <View style={styles.handleBox} >
+            <Ionicons size={28}
+                      name={item.voted ? 'ios-heart' : 'ios-heart-outline'}
+                      style={[styles.Icon, item.voted && {color: ConstStyle.Color_Main}]}/>
+            <Text style={styles.handleText} onPress={()=>_votedFn(!item.voted,item)} >喜欢</Text>
           </View>
           <View style={styles.handleBox}>
             <Ionicons name='ios-chatboxes-outline' size={28} style={styles.Icon}/>
@@ -79,6 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#333'
   },
+
   handleText: {
     paddingLeft: 12,
     fontSize: 18,

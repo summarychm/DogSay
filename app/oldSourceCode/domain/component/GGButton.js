@@ -7,10 +7,11 @@ import {
 
 import {Button} from "ggbasic";
 import {ConstStyle} from 'ggdomain/def';
-
-/**
+/** 
+ *         <App/>
  * 狗狗说APP所用Button按钮封装
  */
+
 export class GGButton  extends React.Component {
   render() {
     return (

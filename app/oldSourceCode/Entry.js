@@ -4,10 +4,36 @@ import {
   Text,
   View
 } from 'react-native';
+import {StackNavigator, addNavigationHelpers, TabNavigator} from 'react-navigation';
 
 import {GGTabBar} from "ggdomain/component";
 import {Account, Creation, Edit} from 'ggdomain/pages';
+//import {Account} from "./domain/pages/account";
 
+/*const Router = StackNavigator({
+  Account: {
+    screen: Account,
+    navigationOptions: {
+      headerTitle: "Account账户页面"
+    }
+  }, Videcam: {
+    screen: Videcam,
+    navigationOptions: {
+      header: () => null
+    }
+  }
+});
+// const App = ({ dispatch, nav }) =>  (
+//   <Navigator
+//     navigation={addNavigationHelpers({
+//       dispatch,
+//       state: nav
+//     })}
+//   />
+// );
+  Entry: Entry,
+
+*/
 
 export default class Entry extends React.Component {
   constructor(props) {
@@ -40,7 +66,12 @@ export default class Entry extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <GGTabBar index={this.state.index} routes={this.tabRouters} handleIndexChange={this.handleIndexChange}/>
+        {/**/}
+        <GGTabBar 
+          index={this.state.index} 
+          routes={this.tabRouters} 
+          handleIndexChange={this.handleIndexChange}
+        />
       </View>
     )
   }

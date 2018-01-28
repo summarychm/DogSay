@@ -17,6 +17,7 @@ export let Request = {
     });
     return fetch(url, options)
       .then(response => response.json())
+      .catch(err=>console.log("post请求错误",err))
   }
 };
 
