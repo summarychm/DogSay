@@ -3,7 +3,7 @@ import {TabNavigator, StackNavigator} from 'react-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {Config} from 'saytools'
-import Creation from '../pages/creation';
+import Creation from '../pages/Creation';
 import Recording from '../pages/Recording';
 import Account from '../pages/Account';
 

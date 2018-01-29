@@ -16,6 +16,7 @@ export const Config = {
       Color_Main: "#ee735c",
       DeviceWidth: Dimensions.get("window").width,
       DeviceHeight: Dimensions.get("window").height,
+      Flex1: {flex: 1}
     }
   }
 ;
