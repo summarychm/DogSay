@@ -32,7 +32,7 @@
 
 
 ## Mock
-> ~~使用的是taobao的[Rap2](http://rap2.taobao.org)~~
+> ~~使用的是taobao的[Rap2](http://rap2.taobao.org)~~    
 > 使用json-server+Mock.js实现完整的REST ful
 
 

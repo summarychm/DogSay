@@ -12,14 +12,20 @@ export const Request = {
       .catch(err => console.error("get请求错误", err))
   },
   post: (url, body) => {
-    let options = _.extend(Config.header, {method: 'POST'}, {
+    let options = _.extend(Config.header, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    }, {
       body: JSON.stringify(body)
     });
     return fetch(url, options).then(response => response.json())
       .catch(err => console.error("post请求错误", err))
   },
   put: (url, body) => {
-    let options = _.extend({method: 'PUT'}, Config.headers, {
+    let options = _.extend(Config.header, {
+      method: 'PUT',
       body: JSON.stringify(body)
     });
     return fetch(url, options)

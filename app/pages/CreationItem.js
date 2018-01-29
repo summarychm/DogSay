@@ -6,46 +6,36 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import {Request, Config} from 'saytools'
 
-export default class CreationItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      creation: {}
-    };
-  }
-
-  componentDidMount() {
-    console.log("componentDidMount");
-  }
-
-  render() {
-    const creation = this.props.creation ? this.props.creation.item : {};
-    return (<View>
-      <Card containerStyle={styles.cardStyle}>
-        <Text style={styles.title}>{creation.title}</Text>
-        <ImageBackground source={{uri: creation.thumb}} style={styles.thumb}>
-          <Ionicons name='ios-play' size={30} style={styles.player}/>
-        </ImageBackground>
-        <View style={styles.cardFooter}>
-          <Button
-            icon={{name: 'ios-heart-outline', type: 'ionicon', style: {color: '#000'}}}
-            backgroundColor='#fff'
-            containerViewStyle={{flex: 1}}
-            fontSize={20}
-            textStyle={{color: "#000"}}
-            title='喜欢'/>
-          <Button
-            icon={{name: 'ios-chatboxes-outline', type: 'ionicon', style: {color: '#000'}}}
-            backgroundColor='#fff'
-            containerViewStyle={{flex: 1}}
-            fontSize={20}
-            textStyle={{color: "#000"}}
-            title='评论'/>
-        </View>
-      </Card>
-    </View>)
-  }
+export const CreationItem = ({creation, _votedFn}) => {
+  creation = creation ? creation.item : {};
+  return (<View>
+    <Card containerStyle={styles.cardStyle}>
+      <Text style={styles.title}>{creation.title}</Text>
+      <ImageBackground source={{uri: creation.thumb}} style={styles.thumb}>
+        <Ionicons name='ios-play' size={30} style={styles.player}/>
+      </ImageBackground>
+      <View style={styles.cardFooter}>
+        <Button
+          icon={{name: 'ios-heart-outline', type: 'ionicon', style: {color: '#000'}}}
+          backgroundColor='#fff'
+          containerViewStyle={{flex: 1}}
+          fontSize={20}
+          textStyle={{color: "#000"}}
+          title={'喜欢('+creation.liketotal+")"}
+          onPress={() => _votedFn(creation)}
+        />
+        <Button
+          icon={{name: 'ios-chatboxes-outline', type: 'ionicon', style: {color: '#000'}}}
+          backgroundColor='#fff'
+          containerViewStyle={{flex: 1}}
+          fontSize={20}
+          textStyle={{color: "#000"}}
+          title='评论'/>
+      </View>
+    </Card>
+  </View>)
 }
+
 const styles = StyleSheet.create({
   cardStyle: {
     margin: 0,
