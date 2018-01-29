@@ -1,14 +1,12 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import {StackNavigator, addNavigationHelpers, TabNavigator} from 'react-navigation';
 
 import {GGTabBar} from "ggdomain/component";
 import {Account, Creation, Edit} from 'ggdomain/pages';
 //import {Account} from "./domain/pages/account";
+
+
 
 /*const Router = StackNavigator({
   Account: {

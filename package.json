@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "json-server": "json-server  --port 5001 --watch ./app/tools/data.json",
     "test": "jest"
   },
   "dependencies": {
