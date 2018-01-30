@@ -15,7 +15,9 @@ export const Request = {
     let options = _.extend(Config.header, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Accept': 'application/json',
+        /*'Content-Type': 'application/x-www-form-urlencoded'*/
+        'Content-Type': 'application/json'
       },
     }, {
       body: JSON.stringify(body)
