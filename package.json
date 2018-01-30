@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "json-server": "json-server  --port 6001 --watch ./app/tools/data.json",
+    "json-test":"json-server ./app/tools/GenerteData.js",
     "test": "jest"
   },
   "dependencies": {

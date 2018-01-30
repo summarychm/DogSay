@@ -10,7 +10,7 @@ export const CreationItem = ({creation, _votedFn,_openPage}) => {
   creation = creation ? creation.item : {};
   return (<TouchableHighlight onPress={_openPage}>
     <Card containerStyle={styles.cardStyle}>
-      <Text style={styles.title}>{creation.title}</Text>
+      <Text style={styles.title} numberOfLines={2} >{creation.title}</Text>
       <ImageBackground source={{uri: creation.thumb}} style={styles.thumb}>
         <Ionicons name='ios-play' size={30} style={styles.player}/>
       </ImageBackground>

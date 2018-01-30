@@ -3,8 +3,8 @@ let _ = require("lodash");
 let Random = Mock.Random;
 let data = {};
 
-
-function generateCreation() {
+//生成创意视频
+function generateCreations() {
   data.creations = [];
   _.times(100, (i) => {
     let id = Random.increment();
@@ -21,9 +21,9 @@ function generateCreation() {
     ];
     data.creations.push(Mock.mock({
       "id": id,
-      "thumb": images[_.random(0, images.length-1)],
+      "thumb": images[_.random(0, images.length - 1)],
       "author": {
-        "avatar": images[_.random(0, images.length-1)],
+        "avatar": images[_.random(0, images.length - 1)],
         "nickname": Random.cname()
       },
       "title": Random.cparagraph(1, 3),
@@ -33,7 +33,8 @@ function generateCreation() {
   });
 }
 
-function generateCommit() {
+//生成创意视频的评论
+function generateCommments() {
   data.comments = [];
   let images = [
     "http://dummyimage.com/1280x720/abc327",
@@ -49,7 +50,7 @@ function generateCommit() {
       "id": id,
       "creationId|1-30": 1,
       "replyBy": {
-        "avatar": images[_.random(0, images.length-1)],
+        "avatar": images[_.random(0, images.length - 1)],
         "nickname": Random.cname()
       },
       "content": Random.cparagraph(1, 3),
@@ -57,8 +58,30 @@ function generateCommit() {
   })
 }
 
+//创建虚拟用户
+function generateUsers() {
+  data.user = [];
+  let images = [
+    "http://dummyimage.com/1280x720/abc327",
+    "http://dummyimage.com/1280x720/7f1874",
+    "http://dummyimage.com/1280x720/e9f01d",
+    "http://dummyimage.com/1280x720/e9ae6a",
+    "http://dummyimage.com/1280x720/199475"
+  ];
+  _.times(10, (i) => {
+    let id = Random.increment();
+    data.user.push(Mock.mock({
+      "id": id,
+      "phoneNumber|13012345600-13012345900": 1,
+      "avatar": images[_.random(0, images.length - 1)],
+      "accessToken": "123qwe123"
+    }));
+  })
+}
+
 module.exports = () => {
-  generateCreation();
-  generateCommit();
+  generateCreations();
+  generateCommments();
+  generateUsers();
   return data;
 }

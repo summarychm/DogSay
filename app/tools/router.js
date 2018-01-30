@@ -7,6 +7,7 @@ import Creation from '../pages/Creation';
 import Recording from '../pages/Recording';
 import Account from '../pages/Account';
 import Detail from "../pages/Detail";
+import Register from '../pages/Register';
 
 
 const CreationStack = StackNavigator({
@@ -19,7 +20,7 @@ const CreationStack = StackNavigator({
       headerTintColor: '#eee',
     }
   },
-  Detail:{
+  Detail: {
     screen: Detail,
     path: '/detail',
     navigationOptions: {
@@ -51,8 +52,30 @@ const RecordingStack = StackNavigator({
     }
   }
 });
+const RegisterStack = StackNavigator({
+  Recording: {
+    screen: Register,
+    path: '/Register',
+    navigationOptions: {
+      title: "注册登录视频",
+      headerStyle: {backgroundColor: Config.Style.Color_Main},
+      headerTintColor: '#eee',
+    }
+  }
+});
 
 export const Tabs = TabNavigator({
+  RegisterStack: {
+    screen: RegisterStack,
+    navigationOptions: {
+      tabBarIcon: ({tintColor, focused}) => (
+        <Ionicons size={26}
+                  name={focused ? "ios-aperture" : "ios-aperture-outline"}
+                  style={{color: tintColor}}
+        />
+      )
+    }
+  },
   CreationStack: {
     screen: CreationStack,
     navigationOptions: {
