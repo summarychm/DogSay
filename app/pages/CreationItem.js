@@ -1,14 +1,14 @@
 import React from 'react';
 
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {View, Text, StyleSheet, ImageBackground, TouchableHighlight} from 'react-native';
 import {Card, Button} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import {Request, Config} from 'saytools'
 
-export const CreationItem = ({creation, _votedFn}) => {
+export const CreationItem = ({creation, _votedFn,_openPage}) => {
   creation = creation ? creation.item : {};
-  return (<View>
+  return (<TouchableHighlight onPress={_openPage}>
     <Card containerStyle={styles.cardStyle}>
       <Text style={styles.title}>{creation.title}</Text>
       <ImageBackground source={{uri: creation.thumb}} style={styles.thumb}>
@@ -21,7 +21,7 @@ export const CreationItem = ({creation, _votedFn}) => {
           containerViewStyle={{flex: 1}}
           fontSize={20}
           textStyle={{color: "#000"}}
-          title={'喜欢('+creation.liketotal+")"}
+          title={'喜欢(' + creation.liketotal + ")"}
           onPress={() => _votedFn(creation)}
         />
         <Button
@@ -33,7 +33,7 @@ export const CreationItem = ({creation, _votedFn}) => {
           title='评论'/>
       </View>
     </Card>
-  </View>)
+  </TouchableHighlight>)
 }
 
 const styles = StyleSheet.create({

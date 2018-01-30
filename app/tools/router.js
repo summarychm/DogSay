@@ -6,6 +6,7 @@ import {Config} from 'saytools'
 import Creation from '../pages/Creation';
 import Recording from '../pages/Recording';
 import Account from '../pages/Account';
+import Detail from "../pages/Detail";
 
 
 const CreationStack = StackNavigator({
@@ -18,6 +19,15 @@ const CreationStack = StackNavigator({
       headerTintColor: '#eee',
     }
   },
+  Detail:{
+    screen: Detail,
+    path: '/detail',
+    navigationOptions: {
+      title: "创意详情",
+      headerStyle: {backgroundColor: Config.Style.Color_Main},
+      headerTintColor: '#eee',
+    }
+  }
 });
 const AccountStack = StackNavigator({
   Account: {

@@ -29,7 +29,7 @@
 * [json-server](https://github.com/typicode/json-server)(用来创建REST ful 服务端)
 * ~~[react-native-tab-view](https://github.com/react-native-community/react-native-tab-view)(用来实现TabBar组件)~~
 * ~~[styled-componentds](https://github.com/styled-components/styled-components)(用来替换原生的style)~~[放弃使用该插件,感觉对RN支持力度不够,使用繁琐,在ReactJS项目中再使用]
-
+* [react-native-video](https://github.com/react-native-community/react-native-video) (视频播放组件)
 
 ## Mock
 > ~~使用的是taobao的[Rap2](http://rap2.taobao.org)~~    

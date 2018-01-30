@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Video from 'react-native-video';
 
-export default class Recording extends React.Component {
+export default class Detail extends React.Component {
   render() {
     return (<View style={styles.container}>
       <Text>Recording</Text>

@@ -5,6 +5,9 @@ import {Card, Button} from 'react-native-elements';
 
 import {Request, Config} from 'saytools'
 import {CreationItem} from './CreationItem';
+import Recording from "./Recording";
+import Detail from "./Detail";
+
 
 export default class Creation extends React.Component {
   constructor(props) {
@@ -29,7 +32,10 @@ export default class Creation extends React.Component {
     return (<View>
       <FlatList
         data={this.state.creations}
-        renderItem={creation => <CreationItem creation={creation} _votedFn={this._votedFn}/>}
+        renderItem={creation =>
+          <CreationItem creation={creation}
+                        _votedFn={this._votedFn}
+                        _openPage={() => this._openPage(creation)}/>}
         keyExtractor={creation => creation.id}
         //消除IOS下顶部空白
         automaticallyAdjustContentInsets={false}
@@ -53,7 +59,10 @@ export default class Creation extends React.Component {
       </FlatList>
     </View>)
   }
-
+  _openPage = (creation) => {
+    console.log(this.props);
+    this.props.navigation.navigate("Detail", {creation:creation})
+  }
   //投票
   _votedFn = (creation) => {
     let newcreation = _.extend(creation);
