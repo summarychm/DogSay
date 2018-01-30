@@ -5,7 +5,7 @@ let data = {};
 
 
 function generateCreation() {
-  data.creation = [];
+  data.creations = [];
   _.times(100, (i) => {
     let id = Random.increment();
     let videos = [
@@ -19,11 +19,11 @@ function generateCreation() {
       "http://dummyimage.com/1280x720/e9ae6a",
       "http://dummyimage.com/1280x720/199475"
     ];
-    data.creation.push(Mock.mock({
-      "_id": id,
-      "thumb": images[_.random(0, images.length)],
+    data.creations.push(Mock.mock({
+      "id": id,
+      "thumb": images[_.random(0, images.length-1)],
       "author": {
-        "avatar": images[_.random(0, images.length)],
+        "avatar": images[_.random(0, images.length-1)],
         "nickname": Random.cname()
       },
       "title": Random.cparagraph(1, 3),
@@ -33,7 +33,32 @@ function generateCreation() {
   });
 }
 
+function generateCommit() {
+  data.comments = [];
+  let images = [
+    "http://dummyimage.com/1280x720/abc327",
+    "http://dummyimage.com/1280x720/7f1874",
+    "http://dummyimage.com/1280x720/e9f01d",
+    "http://dummyimage.com/1280x720/e9ae6a",
+    "http://dummyimage.com/1280x720/199475"
+  ];
+
+  _.times(200, (i) => {
+    let id = Random.increment();
+    data.comments.push(Mock.mock({
+      "id": id,
+      "creationId|1-30": 1,
+      "replyBy": {
+        "avatar": images[_.random(0, images.length-1)],
+        "nickname": Random.cname()
+      },
+      "content": Random.cparagraph(1, 3),
+    }))
+  })
+}
+
 module.exports = () => {
   generateCreation();
+  generateCommit();
   return data;
 }

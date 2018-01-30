@@ -4,7 +4,7 @@ import {View, Text, FlatList, RefreshControl, StyleSheet} from 'react-native';
 import {Card, Button} from 'react-native-elements';
 
 import {Request, Config} from 'saytools'
-import {CreationItem} from './CreationItem';
+import {CreationItem} from './Components/CreationItem';
 import Recording from "./Recording";
 import Detail from "./Detail";
 
@@ -60,7 +60,6 @@ export default class Creation extends React.Component {
     </View>)
   }
   _openPage = (creation) => {
-    console.log(this.props);
     this.props.navigation.navigate("Detail", {creation:creation})
   }
   //投票

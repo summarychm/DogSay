@@ -1,10 +1,11 @@
 import React from 'react';
-import {ActivityIndicator, View, Text, StyleSheet, TouchableHighlight} from 'react-native';
+import {ActivityIndicator, Image, View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import Video from 'react-native-video';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import _ from 'lodash';
 
 import {Config} from 'saytools';
+import DetailCommit from './Components/DetailCommit'
 
 export default class Detail extends React.Component {
   constructor(props) {
@@ -20,8 +21,8 @@ export default class Detail extends React.Component {
   }
 
   render() {
+    let creation = this.props.navigation.state.params ? this.props.navigation.state.params.creation.item : {};
     return (<View style={styles.container}>
-      <Text>Recording</Text>
       <TouchableHighlight onPress={this._onPress}>
         <View style={styles.videoBox}>
           <Video
@@ -65,6 +66,16 @@ export default class Detail extends React.Component {
           width: Config.Style.DeviceWidth * this.state.videoProgress
         }]}></View>
       </View>
+      {/*创作者信息*/}
+      <View style={styles.infoBox}>
+        <Image source={{uri: creation.author.avatar}} style={styles.avatar}/>
+        <View style={styles.descBox}>
+          <Text style={styles.nickname}>{creation.author.nickname}</Text>
+          <Text style={styles.title}>{creation.title}</Text>
+        </View>
+      </View>
+      {/*评论详情*/}
+      <DetailCommit creationId={creation.id}/>
     </View>)
   }
 
@@ -113,7 +124,7 @@ export default class Detail extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
   },
   videoBox: {
     width: Config.Style.DeviceWidth,
@@ -130,10 +141,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 80,
-    width:Config.Style.DeviceWidth,
-    textAlign:'center',
-    color:"#fff",
-    backgroundColor:'transparent'
+    width: Config.Style.DeviceWidth,
+    textAlign: 'center',
+    color: "#fff",
+    backgroundColor: 'transparent'
   },
   player: {
     position: 'absolute',
@@ -165,5 +176,31 @@ const styles = StyleSheet.create({
     width: 1,
     height: 2,
     backgroundColor: Config.Style.Color_Main
-  }
+  },
+
+  infoBox: {
+    flexDirection: "row",
+    margin: 0,
+    padding: 0,
+    alignItems: 'center',
+    borderBottomWidth: 1,
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    marginRight: 10,
+    marginLeft: 10,
+    borderRadius: 30,
+  },
+  descBox: {
+    flex: 1
+  },
+  nickname: {
+    fontSize: 18,
+  },
+  title: {
+    marginTop: 8,
+    fontSize: 16,
+    color: "#666"
+  },
 });

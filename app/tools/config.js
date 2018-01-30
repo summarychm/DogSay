@@ -10,7 +10,8 @@ export const Config = {
       }
     },
     URL: {
-      creation: BASE_URL + "/creation",
+      creation: BASE_URL + "/creations",
+      comment: BASE_URL + "/comments",
     },
     Style: {
       Color_Main: "#ee735c",
