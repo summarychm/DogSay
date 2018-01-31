@@ -2875,7 +2875,14 @@
       "content": "性离在华总与据三向业儿明放如反石在科。"
     }
   ],
-  "user": [
+  "users": [
+    {
+      "id": 311,
+      "phoneNumber": 1111,
+      "avatar": "http://dummyimage.com/1280X720/79f2b2",
+      "nicName": "许静",
+      "accessToken": "123qwe301"
+    },
     {
       "id": 301,
       "phoneNumber": 13012345716,
@@ -2945,6 +2952,21 @@
       "avatar": "http://dummyimage.com/1280X720/f2798b",
       "nicName": "孙丽",
       "accessToken": "123qwe310"
+    },
+    {
+      "phoneNumber": "321",
+      "accessToken": "1517384842308",
+      "id": 312
+    },
+    {
+      "phoneNumber": "322",
+      "accessToken": "1517384958042",
+      "id": 313
+    },
+    {
+      "phoneNumber": "121",
+      "accessToken": "1517385131365",
+      "id": 314
     }
   ]
 }

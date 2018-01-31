@@ -30,7 +30,7 @@
 * ~~[react-native-tab-view](https://github.com/react-native-community/react-native-tab-view)(用来实现TabBar组件)~~[使用react-navigation替代]
 * ~~[styled-componentds](https://github.com/styled-components/styled-components)(用来替换原生的style)~~[在RN中使用繁琐,开发ReactJS项目中再使用]
 * [react-native-video](https://github.com/react-native-community/react-native-video) (视频播放组件)
-
+* [react-native-sk-countdown](https://github.com/shigebeyond/react-native-sk-countdown)[倒计时组件]
 ## Mock
 > ~~使用的是taobao的[Rap2](http://rap2.taobao.org)~~    
 > 使用json-server+Mock.js实现完整的REST ful

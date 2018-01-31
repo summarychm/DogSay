@@ -57,7 +57,7 @@ const RegisterStack = StackNavigator({
     screen: Register,
     path: '/Register',
     navigationOptions: {
-      title: "注册登录视频",
+      title: "登录创意视频",
       headerStyle: {backgroundColor: Config.Style.Color_Main},
       headerTintColor: '#eee',
     }

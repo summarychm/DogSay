@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "json-server": "json-server  --port 6001 --watch ./app/tools/data.json",
-    "json-test":"json-server ./app/tools/GenerteData.js",
+    "json-server": "json-server  --port 6001 --watch ./app/tools/Mock/data.json",
+    "json-test": "json-server ./app/tools/Mock/GenerteData.js",
     "test": "jest"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "react": "16.2.0",
     "react-native": "0.52.1",
     "react-native-elements": "^0.19.0",
+    "react-native-sk-countdown": "^1.0.1",
     "react-native-tab-view": "0.0.74",
     "react-native-vector-icons": "^4.5.0",
     "react-native-video": "^2.0.0",
