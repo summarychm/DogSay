@@ -2952,21 +2952,6 @@
       "avatar": "http://dummyimage.com/1280X720/f2798b",
       "nicName": "孙丽",
       "accessToken": "123qwe310"
-    },
-    {
-      "phoneNumber": "321",
-      "accessToken": "1517384842308",
-      "id": 312
-    },
-    {
-      "phoneNumber": "322",
-      "accessToken": "1517384958042",
-      "id": 313
-    },
-    {
-      "phoneNumber": "121",
-      "accessToken": "1517385131365",
-      "id": 314
     }
   ]
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput, Alert} from 'react-native';
+import {View, Text, StyleSheet, TextInput, Alert, AsyncStorage} from 'react-native';
 import {Button} from 'react-native-elements';
 import {CountDownText, Config, Request} from 'saytools';
 
@@ -7,6 +7,8 @@ export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      logined: false,
+      user: {},
       isSendCode: false,
       phoneNumber: "",
       phoneCode: "",
@@ -14,6 +16,7 @@ export default class Register extends React.Component {
   }
 
   render() {
+    //console.log(this.props);
     return (
       <View style={styles.container}>
         <TextInput style={styles.phoneNumber}
@@ -33,7 +36,7 @@ export default class Register extends React.Component {
                 style={styles.countDownText}
                 countType='seconds' // 计时类型：seconds / date
                 auto={true} // 自动开始,false的话可通过ref.xxx.start()控制          
-                timeLeft={5} // 正向计时 时间起点为0秒
+                timeLeft={60} // 正向计时 时间起点为0秒
                 step={-1} // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
                 startText='获取验证码' // 开始的文本
                 endText='获取验证码' // 结束的文本
@@ -43,11 +46,12 @@ export default class Register extends React.Component {
                 }} // 结束回调
               />
               :
-              <Button title={"获取验证码"}
-                      buttonStyle={styles.phoneButton}
-                      onPress={() => {
-                        this.setState({isSendCode: true})
-                      }}/>
+              <Button
+                title={"获取验证码"}
+                buttonStyle={styles.phoneButton}
+                onPress={() => {
+                  this.setState({isSendCode: true})
+                }}/>
             }
           </View>
         </View>
@@ -64,6 +68,10 @@ export default class Register extends React.Component {
     if (!this.state.phoneNumber || !this.state.phoneCode) {
       return Alert.alert("提示", "请输入手机号和验证码!");
     }
+    if (AsyncStorage.getItem("user").length > 5) {
+      return Alert.alert("提示", "无需重复登录");
+    }
+
     let params = {
       phoneNumber: this.state.phoneNumber,
     }
@@ -78,15 +86,20 @@ export default class Register extends React.Component {
           Alert.alert("提示", "该手机号暂未注册,是否注册?", [
             {text: '注册', onPress: () => this._signup(params)},
             {
-              text: '取消', onPress: () => {  return; }
+              text: '取消', onPress: () => {
+                return;
+              }
             },
           ]);
+        } else {
+          //老用户登录
+          this._saveUserData(response[0]);
         }
-        //老用户登录
-        this._saveUserData(response[0]);
 
       })
   };
+
+  //注册账户
   _signup = (params) => {
     params.accessToken = new Date().getTime() + "";
     Request.post(Config.URL.user, params)
@@ -94,24 +107,35 @@ export default class Register extends React.Component {
         console.error("注册错误!", error);
       })
       .then(response => {
-        console.log(response);
-        if (response.length === 1) {
-          Alert.alert("提示", "恭喜注册成功");
-          this._saveUserData(response[0])
+        // console.log(response);
+        if (response.id) {
+          this._saveUserData(response);
+          return Alert.alert("提示", "恭喜注册成功");
         }
       })
   }
+
   //保存用户数据
   _saveUserData = (data) => {
-    console.log(data);
-    
+    // console.log(data);
+    if (data.id) {
+      AsyncStorage
+        .setItem("user", JSON.stringify(data))
+        .catch(err => console.log("保存用户数据失败", err))
+        .then(() => {
+          this.setState({
+            logined: true,
+            user: data
+          })
+        });
+    }
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     margin: 20,
-    backgroundColor: '#eee',
+    // backgroundColor: '#eee',
   },
   phoneNumber: {
     marginRight: 10,

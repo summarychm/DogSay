@@ -43,6 +43,9 @@
 > ios-play   
 > ios-chatboxes-outline       
 
+## 使用的图床
+* [cloudinary](https://res.cloudinary.com/dogsayimage/image/upload/sample.jpg)
+* [qiniu]()
 
 
 

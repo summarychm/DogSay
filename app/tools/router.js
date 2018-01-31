@@ -65,17 +65,7 @@ const RegisterStack = StackNavigator({
 });
 
 export const Tabs = TabNavigator({
-  RegisterStack: {
-    screen: RegisterStack,
-    navigationOptions: {
-      tabBarIcon: ({tintColor, focused}) => (
-        <Ionicons size={26}
-                  name={focused ? "ios-aperture" : "ios-aperture-outline"}
-                  style={{color: tintColor}}
-        />
-      )
-    }
-  },
+
   CreationStack: {
     screen: CreationStack,
     navigationOptions: {
@@ -104,6 +94,17 @@ export const Tabs = TabNavigator({
       tabBarIcon: ({tintColor, focused}) => (
         <Ionicons size={26}
                   name={focused ? "ios-more" : "ios-more-outline"}
+                  style={{color: tintColor}}
+        />
+      )
+    }
+  },
+  RegisterStack: {
+    screen: RegisterStack,
+    navigationOptions: {
+      tabBarIcon: ({tintColor, focused}) => (
+        <Ionicons size={26}
+                  name={focused ? "ios-aperture" : "ios-aperture-outline"}
                   style={{color: tintColor}}
         />
       )
