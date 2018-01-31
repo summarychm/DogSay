@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput, Alert, AsyncStorage} from 'react-native';
+import {View, Text, StyleSheet, TextInput, Alert} from 'react-native';
 import {Button} from 'react-native-elements';
 import {CountDownText, Config, Request} from 'saytools';
+import Creation from "./Creation";
 
 export default class Register extends React.Component {
   constructor(props) {
@@ -15,19 +16,32 @@ export default class Register extends React.Component {
     }
   }
 
+  componentDidMount() {
+    storage.load({key: "user"})
+      .catch(err => {
+        console.log(err.name);
+        switch (err.name) {
+          case 'NotFoundError':
+            break;
+          case 'ExpiredError':
+            break;
+        }
+      })
+      .then(data => {
+        this.setState({user: data})
+      })
+  }
+
   render() {
-    //console.log(this.props);
     return (
       <View style={styles.container}>
         <TextInput style={styles.phoneNumber}
-                   ref={index => this.phoneNumberInput = index}
                    placeholder="请输入手机号"
                    onChangeText={(val) => this.setState({phoneNumber: val})}
                    keyboardType="numeric"
         />
         <View style={styles.codeView}>
           <TextInput style={styles.phoneCode}
-                     ref={index => this.phoneCodeInput = index}
                      onChangeText={(val) => this.setState({phoneCode: val})}
           />
           <View style={styles.countDown}>
@@ -68,10 +82,6 @@ export default class Register extends React.Component {
     if (!this.state.phoneNumber || !this.state.phoneCode) {
       return Alert.alert("提示", "请输入手机号和验证码!");
     }
-    if (AsyncStorage.getItem("user").length > 5) {
-      return Alert.alert("提示", "无需重复登录");
-    }
-
     let params = {
       phoneNumber: this.state.phoneNumber,
     }
@@ -119,13 +129,14 @@ export default class Register extends React.Component {
   _saveUserData = (data) => {
     // console.log(data);
     if (data.id) {
-      AsyncStorage
-        .setItem("user", JSON.stringify(data))
+      storage.save("user", JSON.stringify(data))
         .catch(err => console.log("保存用户数据失败", err))
         .then(() => {
           this.setState({
             logined: true,
             user: data
+          },()=>{
+            this.props.navigation.navigate("Creation")
           })
         });
     }

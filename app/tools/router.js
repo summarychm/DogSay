@@ -39,6 +39,15 @@ const AccountStack = StackNavigator({
       headerStyle: {backgroundColor: Config.Style.Color_Main},
       headerTintColor: '#eee',
     }
+  },
+  Register: {
+    screen: Register,
+    path: '/Register',
+    navigationOptions: {
+      title: "登录创意视频",
+      headerStyle: {backgroundColor: Config.Style.Color_Main},
+      headerTintColor: '#eee',
+    }
   }
 });
 const RecordingStack = StackNavigator({
@@ -52,20 +61,19 @@ const RecordingStack = StackNavigator({
     }
   }
 });
-const RegisterStack = StackNavigator({
-  Recording: {
-    screen: Register,
-    path: '/Register',
-    navigationOptions: {
-      title: "登录创意视频",
-      headerStyle: {backgroundColor: Config.Style.Color_Main},
-      headerTintColor: '#eee',
-    }
-  }
-});
 
 export const Tabs = TabNavigator({
-
+  AccountStack: {
+    screen: AccountStack,
+    navigationOptions: {
+      tabBarIcon: ({tintColor, focused}) => (
+        <Ionicons size={26}
+                  name={focused ? "ios-more" : "ios-more-outline"}
+                  style={{color: tintColor}}
+        />
+      )
+    }
+  },
   CreationStack: {
     screen: CreationStack,
     navigationOptions: {
@@ -83,28 +91,6 @@ export const Tabs = TabNavigator({
       tabBarIcon: ({tintColor, focused}) => (
         <Ionicons size={26}
                   name={focused ? "ios-recording" : "ios-recording-outline"}
-                  style={{color: tintColor}}
-        />
-      )
-    }
-  },
-  AccountStack: {
-    screen: AccountStack,
-    navigationOptions: {
-      tabBarIcon: ({tintColor, focused}) => (
-        <Ionicons size={26}
-                  name={focused ? "ios-more" : "ios-more-outline"}
-                  style={{color: tintColor}}
-        />
-      )
-    }
-  },
-  RegisterStack: {
-    screen: RegisterStack,
-    navigationOptions: {
-      tabBarIcon: ({tintColor, focused}) => (
-        <Ionicons size={26}
-                  name={focused ? "ios-aperture" : "ios-aperture-outline"}
                   style={{color: tintColor}}
         />
       )
