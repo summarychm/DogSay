@@ -30,6 +30,7 @@
 * [react-native-video](https://github.com/react-native-community/react-native-video) (视频播放组件)
 * [react-native-sk-countdown](https://github.com/shigebeyond/react-native-sk-countdown)[倒计时组件]
 * [react-native-storage](https://github.com/sunnylqm/react-native-storage)(AsyncStorage的封装,RN中文网维护)
+* [react-native-easy-toast](https://github.com/crazycodeboy/react-native-easy-toast)(跨平台Toast组件)
 
 ## 弃用的组件
 * ~~[react-native-tab-view](https://github.com/react-native-community/react-native-tab-view)(用来实现TabBar组件)~~[使用react-navigation替代]

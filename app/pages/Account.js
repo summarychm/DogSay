@@ -1,5 +1,6 @@
 import React from 'react';
 import {ScrollView, View, Text, StyleSheet, ImageBackground, Alert} from 'react-native';
+import Toast from 'react-native-easy-toast';
 
 import Register from './Register';
 import {Button, Avatar} from 'react-native-elements';
@@ -13,8 +14,11 @@ export default class Account extends React.Component {
     };
   }
 
-  componentDidMount(message = "props") {
-    console.log(message, this.props);
+  componentDidMount() {
+    console.log(this.props);
+    storage.remove({
+      key: 'user'
+    });
     storage.load({key: 'user'})
       .catch(err => {
         switch (err.name) {
@@ -36,10 +40,12 @@ export default class Account extends React.Component {
 
   render() {
     let user = this.state.user || {};
-    console.log(user);
     if (!user.id)
-      return <Text>还未登录</Text>;
-    else {
+      return (<View >
+        <Text>请先登录</Text>
+        <Toast ref={node => this.Toast = node}/>
+      </View>)
+    else
       return (<ScrollView style={styles.container}>
         <View style={styles.header}>
           {/*<ImageBackground
@@ -57,12 +63,10 @@ export default class Account extends React.Component {
           </ImageBackground>*/}
         </View>
         <View>
-          <Text>个人信息</Text>
+          <Text> 个人信息 </Text>
+          <Toast ref={node => this.Toast = node}/>
         </View>
-
       </ScrollView>)
-    }
-
   }
 }
 

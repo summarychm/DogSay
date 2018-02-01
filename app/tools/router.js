@@ -50,30 +50,8 @@ const AccountStack = StackNavigator({
     }
   }
 });
-const RecordingStack = StackNavigator({
-  Recording: {
-    screen: Recording,
-    path: '/recording',
-    navigationOptions: {
-      title: "制作视频",
-      headerStyle: {backgroundColor: Config.Style.Color_Main},
-      headerTintColor: '#eee',
-    }
-  }
-});
 
 export const Tabs = TabNavigator({
-  AccountStack: {
-    screen: AccountStack,
-    navigationOptions: {
-      tabBarIcon: ({tintColor, focused}) => (
-        <Ionicons size={26}
-                  name={focused ? "ios-more" : "ios-more-outline"}
-                  style={{color: tintColor}}
-        />
-      )
-    }
-  },
   CreationStack: {
     screen: CreationStack,
     navigationOptions: {
@@ -86,8 +64,12 @@ export const Tabs = TabNavigator({
     }
   },
   RecordingStack: {
-    screen: RecordingStack,
+    screen: Recording,
+    path: '/recording',
     navigationOptions: {
+      title: "制作视频",
+      headerStyle: {backgroundColor: Config.Style.Color_Main},
+      headerTintColor: '#eee',
       tabBarIcon: ({tintColor, focused}) => (
         <Ionicons size={26}
                   name={focused ? "ios-recording" : "ios-recording-outline"}
@@ -96,7 +78,19 @@ export const Tabs = TabNavigator({
       )
     }
   },
+  AccountStack: {
+    screen: AccountStack,
+    navigationOptions: {
+      tabBarIcon: ({tintColor, focused}) => (
+        <Ionicons size={26}
+                  name={focused ? "ios-more" : "ios-more-outline"}
+                  style={{color: tintColor}}
+        />
+      )
+    }
+  },
 }, {
+  initialRouteName:'CreationStack',
   tabBarPosition: "bottom",
   animationEnabled: true,
   tabBarOptions: {

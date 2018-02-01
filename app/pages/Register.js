@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, TextInput, Alert} from 'react-native';
 import {Button} from 'react-native-elements';
+import Toast from 'react-native-easy-toast';
+
 import {CountDownText, Config, Request} from 'saytools';
 import Creation from "./Creation";
 
@@ -17,18 +19,18 @@ export default class Register extends React.Component {
   }
 
   componentDidMount() {
-    storage.load({key: "user"})
+    storage
+      .load({key: "user"})
       .catch(err => {
-        console.log(err.name);
-        switch (err.name) {
-          case 'NotFoundError':
-            break;
-          case 'ExpiredError':
-            break;
-        }
       })
       .then(data => {
-        this.setState({user: data})
+        if (data && data.id) {
+          this.Toast.show("您已登录!");
+          setTimeout(() => {
+            //this.props.navigation.navigate("Creation");
+            this.props.navigation.goBack();
+          }, 200)
+        }
       })
   }
 
@@ -73,6 +75,11 @@ export default class Register extends React.Component {
           title="登录"
           buttonStyle={styles.registerButton}
           onPress={e => this._register(e)}/>
+        <Toast
+          ref={node => this.Toast = node}
+          opacity={0.7}
+          position='center'
+        />
       </View>)
   }
 
@@ -80,7 +87,8 @@ export default class Register extends React.Component {
   _register = (e) => {
     e.preventDefault();
     if (!this.state.phoneNumber || !this.state.phoneCode) {
-      return Alert.alert("提示", "请输入手机号和验证码!");
+      this.Toast.show("请输入手机号和验证码!");
+      return null;
     }
     let params = {
       phoneNumber: this.state.phoneNumber,
@@ -93,7 +101,7 @@ export default class Register extends React.Component {
         //查看是否是老用户
         if (response.length !== 1) {
           //将该手机号注册为新用户          
-          Alert.alert("提示", "该手机号暂未注册,是否注册?", [
+          return Alert.alert("提示", "该手机号暂未注册,是否注册?", [
             {text: '注册', onPress: () => this._signup(params)},
             {
               text: '取消', onPress: () => {
@@ -105,7 +113,6 @@ export default class Register extends React.Component {
           //老用户登录
           this._saveUserData(response[0]);
         }
-
       })
   };
 
@@ -117,29 +124,33 @@ export default class Register extends React.Component {
         console.error("注册错误!", error);
       })
       .then(response => {
-        // console.log(response);
-        if (response.id) {
+        if (response.id)
           this._saveUserData(response);
-          return Alert.alert("提示", "恭喜注册成功");
-        }
+        else
+          console.log("注册账户错误,", response);
       })
   }
 
   //保存用户数据
   _saveUserData = (data) => {
-    // console.log(data);
-    if (data.id) {
-      storage.save("user", JSON.stringify(data))
-        .catch(err => console.log("保存用户数据失败", err))
-        .then(() => {
-          this.setState({
-            logined: true,
-            user: data
-          },()=>{
-            this.props.navigation.navigate("Creation")
-          })
-        });
-    }
+    if (!data.id)
+      console.log("空值");
+    storage.save({key: "user", data: data})
+      .catch(err => console.error("保存用户数据失败", err))
+      .then(() => {
+        this.setState({
+          logined: true,
+          phoneNumber: "",
+          phoneCode: "",
+          user: data
+        }, () => {
+          this.Toast.show("恭喜登录成功!");
+          setTimeout(() => {
+            //this.props.navigation.navigate("Creation");
+            this.props.navigation.goBack();
+          }, 500)
+        })
+      });
   }
 }
 
