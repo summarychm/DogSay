@@ -1,7 +1,9 @@
 import {AppRegistry} from 'react-native';
-import Entry from './app/index';
+
 import Storage from 'react-native-storage';
 import {AsyncStorage} from 'react-native';
+
+import Entry from './app/index';
 
 let storage = new Storage({
   size: 1000,

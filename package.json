@@ -18,6 +18,7 @@
     "react-native": "0.52.1",
     "react-native-easy-toast": "^1.0.9",
     "react-native-elements": "^0.19.0",
+    "react-native-image-picker": "^0.26.7",
     "react-native-sk-countdown": "^1.0.1",
     "react-native-storage": "^0.2.2",
     "react-native-tab-view": "0.0.74",
