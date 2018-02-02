@@ -1,11 +1,11 @@
 import React from 'react';
-import {ScrollView, View, Text, StyleSheet, ImageBackground, TouchableHighlight} from 'react-native';
-import Toast from 'react-native-easy-toast';
+import {ScrollView, View, Text, StyleSheet, ImageBackground} from 'react-native';
 import {Button, Avatar} from 'react-native-elements';
+import Toast from 'react-native-easy-toast';
 import ImagePicker from 'react-native-image-picker';
 
-import Register from './Register';
 import {Config, Request} from 'saytools';
+import Register from './Register';
 
 export default class Account extends React.Component {
   constructor(props) {
@@ -22,6 +22,7 @@ export default class Account extends React.Component {
 
   render() {
     let user = this.state.user || {};
+    user.avatar = user.avatar || "http://dummyimage.com/1280X720/79f2b2"
     if (!user.id)
       return (<View>
         <Text>请先登录</Text>
@@ -57,19 +58,29 @@ export default class Account extends React.Component {
 
   //更换Avatar
   _pickPhoto = () => {
-    let options = {
+    const options = {
       title: '选择头像',
-      cancelButtonTitle: "取消",
-      takePhotoButtonTitle: "拍照",
-      chooseFromLibraryButtonTitle: "选择相册",
-      quality: 0.75,//图像质量
-      allowsEditing: true,
+      cancelButtonTitle: '取消',
+      takePhotoButtonTitle: '拍照',
+      chooseFromLibraryButtonTitle: '图片库',
+      cameraType: 'back',
+      mediaType: 'photo',
+      videoQuality: 'high',
+      durationLimit: 10,
+      maxWidth: 600,
+      maxHeight: 600,
+      aspectX: 2,
+      aspectY: 1,
+      quality: 0.8,
+      angle: 0,
+      allowsEditing: false,
       noData: false,
       storageOptions: {
         skipBackup: true,
         path: 'images'
       }
     };
+
     ImagePicker.showImagePicker(options, (response) => {
       if (response.didCancel)
         return null;
@@ -80,8 +91,8 @@ export default class Account extends React.Component {
         console.log('User tapped custom button: ', response.customButton);
       }
       else {
-        // let source = {uri: response.uri};
-        let source = {uri: 'data:image/jpeg;base64,' + response.data};
+        let source = {uri: response.uri};
+        //   let source = {uri: 'data:image/jpeg;base64,' + response.data};
         let user = this.state.user;
         user.avatar = source;
         this.setState({user: user});
@@ -93,7 +104,7 @@ export default class Account extends React.Component {
   //检测用户是否已登录
   _CheckUser = () => {
     //清空user数据 
-    // storage.remove({key: 'user'});
+   // storage.remove({key: 'user'});
     storage.load({key: 'user'})
       .catch(err => {
         switch (err.name) {
@@ -105,34 +116,25 @@ export default class Account extends React.Component {
         }
       })
       .then(response => {
-        console.log(response);
-        response.avatar = response.avatar || "http://dummyimage.com/1280X720/79f2b2";
-        this.setState({
-          user: response
-        })
+        let user = response;
+        user.avatar = user.avatar || "http://dummyimage.com/1280X720/79f2b2";
+        this.setState({user: user})
       });
   }
-
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //width: Config.Style.DeviceWidth,
-    //backgroundColor: 'red',
   },
   headerView: {
-    flex: 1,
-    // height: Config.Style.DeviceHeight * 0.3,
+    height: Config.Style.DeviceHeight * 0.2,
 //    backgroundColor: "blue",
-    justifyContent: 'center',
-    alignItems: 'center',
+    //justifyContent: 'center',
+    //alignItems: 'center',
   },
   backgroundImage: {
-    width: Config.Style.DeviceWidth,
-    height: Config.Style.DeviceWidth * 0.4,
-    // flex: 1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

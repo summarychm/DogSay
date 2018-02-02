@@ -4,32 +4,30 @@ import {Button} from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 
 import {CountDownText, Config, Request} from 'saytools';
-import Creation from "./Creation";
 
 export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       logined: false,
-      user: {},
       isSendCode: false,
       phoneNumber: "",
       phoneCode: "",
+      user: {},
     }
   }
 
   componentDidMount() {
     storage
       .load({key: "user"})
-      .catch(err => {
-      })
+      .catch(err => { })
       .then(data => {
         if (data && data.id) {
           this.Toast.show("您已登录!");
           setTimeout(() => {
             //this.props.navigation.navigate("Creation");
             this.props.navigation.goBack();
-          }, 200)
+          }, 200);
         }
       })
   }
@@ -83,6 +81,9 @@ export default class Register extends React.Component {
       </View>)
   }
 
+
+
+
   //登录
   _register = (e) => {
     e.preventDefault();
@@ -131,7 +132,7 @@ export default class Register extends React.Component {
       })
   }
 
-  //保存用户数据
+  //保存用户数据 
   _saveUserData = (data) => {
     if (!data.id)
       console.log("空值");

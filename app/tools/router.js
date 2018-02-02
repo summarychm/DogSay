@@ -1,14 +1,15 @@
 import React from 'react';
+import {Text, View,TouchableHighlight} from 'react-native';
 import {TabNavigator, StackNavigator} from 'react-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {Config} from 'saytools'
 import Creation from '../pages/Creation';
 import Recording from '../pages/Recording';
-import Account from '../pages/Account';
 import Detail from "../pages/Detail";
 import Register from '../pages/Register';
-
+import Account from '../pages/Account';
+import AccountEdit from '../pages/AccountEdit';
 
 const CreationStack = StackNavigator({
   Creation: {
@@ -34,21 +35,37 @@ const AccountStack = StackNavigator({
   Account: {
     screen: Account,
     path: '/account',
-    navigationOptions: {
+    navigationOptions: ({navigation}) => ({
       title: "账户详情",
       headerStyle: {backgroundColor: Config.Style.Color_Main},
       headerTintColor: '#eee',
-    }
+      headerRight: <TouchableHighlight
+        style={{marginRight:20}}
+        onPress={() => { navigation.navigate("AccountEdit") }}>
+        <Text>编辑</Text>
+      </TouchableHighlight>
+    })
   },
   Register: {
     screen: Register,
-    path: '/Register',
+    path: '/register',
     navigationOptions: {
       title: "登录创意视频",
       headerStyle: {backgroundColor: Config.Style.Color_Main},
       headerTintColor: '#eee',
     }
-  }
+  },
+  AccountEdit: {
+    screen: AccountEdit,
+    path: "/account/edit",
+    navigationOptions: {
+      title: "编辑狗狗信息",
+      headerStyle: {backgroundColor: Config.Style.Color_Main},
+      headerTintColor: '#eee',
+    }
+  } 
+},{
+ // initialRouteName:"AccountEdit"
 });
 
 export const Tabs = TabNavigator({
