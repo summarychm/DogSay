@@ -110,9 +110,9 @@ export default class AccountEdit extends React.Component {
       })
       .then(response => {
         this.Toast.show("信息编辑成功!");
-        setTimeout(() => {
+       /* setTimeout(() => {
           this.props.navigation.goBack();
-        }, 200)
+        }, 200)*/
       });
 
 

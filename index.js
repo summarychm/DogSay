@@ -1,9 +1,11 @@
 import {AppRegistry} from 'react-native';
 
+//import Entry from './app/index';
+import {AppRouters} from './app/tools/router';
+
+
 import Storage from 'react-native-storage';
 import {AsyncStorage} from 'react-native';
-
-import Entry from './app/index';
 
 let storage = new Storage({
   size: 1000,
@@ -14,7 +16,6 @@ let storage = new Storage({
 });
 global.storage = storage;
 
-
 //屏蔽Remote debugger is in a background tab的警告提示 
 console.ignoredYellowBox = ['Remote debugger'];
-AppRegistry.registerComponent('DagSay', () => Entry);
+AppRegistry.registerComponent('DagSay', () => AppRouters);

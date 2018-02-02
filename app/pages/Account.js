@@ -5,7 +5,6 @@ import Toast from 'react-native-easy-toast';
 import ImagePicker from 'react-native-image-picker';
 
 import {Config, Request} from 'saytools';
-import Register from './Register';
 
 export default class Account extends React.Component {
   constructor(props) {
@@ -23,11 +22,14 @@ export default class Account extends React.Component {
   render() {
     let user = this.state.user || {};
     user.avatar = user.avatar || "http://dummyimage.com/1280X720/79f2b2"
-    if (!user.id)
+    if (!user.id) {
+      //this.props.navigation.navigate("Register");
       return (<View>
         <Text>请先登录</Text>
         <Toast ref={node => this.Toast = node}/>
       </View>);
+    }
+
     else {
       return (<ScrollView style={styles.container}>
         <View style={styles.headerView}>
@@ -50,6 +52,12 @@ export default class Account extends React.Component {
         <View style={styles.bodyView}>
           <Text> 个人信息 </Text>
           <Toast ref={node => this.Toast = node}/>
+        </View>
+        <View style={styles.signoutView}>
+          <Button title={"退出登录"}
+                  icon={{name: "sign-out", type: "octicon"}}
+                  onPress={() => storage.remove({key: 'user'})}
+          />
         </View>
       </ScrollView>)
     }
@@ -80,8 +88,8 @@ export default class Account extends React.Component {
         path: 'images'
       }
     };
-
     ImagePicker.showImagePicker(options, (response) => {
+      console.log("showImagePicker");
       if (response.didCancel)
         return null;
       else if (response.error) {
@@ -104,21 +112,23 @@ export default class Account extends React.Component {
   //检测用户是否已登录
   _CheckUser = () => {
     //清空user数据 
-   // storage.remove({key: 'user'});
+    // storage.remove({key: 'user'});
     storage.load({key: 'user'})
       .catch(err => {
         switch (err.name) {
           case 'NotFoundError':
-            this.props.navigation.navigate("Register");
+          //  this.props.navigation.navigate("Register");
             break;
           case 'ExpiredError':
             break;
         }
       })
       .then(response => {
-        let user = response;
-        user.avatar = user.avatar || "http://dummyimage.com/1280X720/79f2b2";
-        this.setState({user: user})
+        if (response !== undefined) {
+          let user = response;
+          user.avatar = user.avatar || "http://dummyimage.com/1280X720/79f2b2";
+          this.setState({user: user})
+        }
       });
   }
 }
@@ -128,7 +138,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerView: {
-    height: Config.Style.DeviceHeight * 0.2,
+    height: Config.Style.DeviceHeight * 0.26,
 //    backgroundColor: "blue",
     //justifyContent: 'center',
     //alignItems: 'center',
@@ -145,5 +155,8 @@ const styles = StyleSheet.create({
     flex: 5,
     backgroundColor: "blue",
   },
+  signoutView: {
+    marginTop: 20
+  }
 
 });

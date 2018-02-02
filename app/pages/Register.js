@@ -9,30 +9,20 @@ export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      logined: false,
       isSendCode: false,
       phoneNumber: "",
       phoneCode: "",
+      logined: false,
       user: {},
     }
   }
 
-  componentDidMount() {
-    storage
-      .load({key: "user"})
-      .catch(err => { })
-      .then(data => {
-        if (data && data.id) {
-          this.Toast.show("您已登录!");
-          setTimeout(() => {
-            //this.props.navigation.navigate("Creation");
-            this.props.navigation.goBack();
-          }, 200);
-        }
-      })
+  componentWillMount() {
+    this._getUserInfo();
   }
 
   render() {
+    this.state.logined && <View></View>;
     return (
       <View style={styles.container}>
         <TextInput style={styles.phoneNumber}
@@ -50,7 +40,7 @@ export default class Register extends React.Component {
                 style={styles.countDownText}
                 countType='seconds' // 计时类型：seconds / date
                 auto={true} // 自动开始,false的话可通过ref.xxx.start()控制          
-                timeLeft={60} // 正向计时 时间起点为0秒
+                timeLeft={5} // 正向计时 时间起点为0秒
                 step={-1} // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
                 startText='获取验证码' // 开始的文本
                 endText='获取验证码' // 结束的文本
@@ -81,8 +71,49 @@ export default class Register extends React.Component {
       </View>)
   }
 
+  // 获取用户信息
+  async _getUserInfo() {
+    var value = await storage.load({
+      key: 'user',
+    }).catch(err => {
+      console.warn(err.message);
+      switch (err.name) {
+        case 'NotFoundError':
+          // TODO;
+          break;
+        case 'ExpiredError':
+          // TODO
+          break;
+      }
+    }).then(ret => {
+      //跳转到主页中
+      this.props.navigation.navigate("Tabs");
+    })
 
 
+  }
+
+  //保存用户数据 
+  async _saveUserData(data) {
+    if (!data.id)
+      return;
+    let that = this;
+    var value = await storage.save({key: "user", data: data})
+      .catch(err => console.error("保存用户数据失败", err))
+      .then(response => {
+        console.log("response save", response);
+        that.setState({
+          logined: true,
+          user: data
+        }, () => {
+          this.Toast.show("恭喜登录成功!");
+          setTimeout(() => {
+            this.props.navigation.navigate("Tabs");
+          }, 200)
+        })
+      });
+
+  }
 
   //登录
   _register = (e) => {
@@ -99,6 +130,7 @@ export default class Register extends React.Component {
         console.error("登录错误!", error);
       })
       .then(response => {
+        console.log("response", response);
         //查看是否是老用户
         if (response.length !== 1) {
           //将该手机号注册为新用户          
@@ -132,32 +164,14 @@ export default class Register extends React.Component {
       })
   }
 
-  //保存用户数据 
-  _saveUserData = (data) => {
-    if (!data.id)
-      console.log("空值");
-    storage.save({key: "user", data: data})
-      .catch(err => console.error("保存用户数据失败", err))
-      .then(() => {
-        this.setState({
-          logined: true,
-          phoneNumber: "",
-          phoneCode: "",
-          user: data
-        }, () => {
-          this.Toast.show("恭喜登录成功!");
-          setTimeout(() => {
-            //this.props.navigation.navigate("Creation");
-            this.props.navigation.goBack();
-          }, 500)
-        })
-      });
-  }
 }
 
 const styles = StyleSheet.create({
   container: {
     margin: 20,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     // backgroundColor: '#eee',
   },
   phoneNumber: {

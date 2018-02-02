@@ -61,7 +61,7 @@ export class CountDown {
     this.timerId = setTimeout(()=> {
       // 倒计时到0停止计时
       if (this.timePassed <= 0 && this.step < 0) return this.end();
-
+      console.log("log"); 
       this.refreshTime(true);
 
     }, 1000 * Math.abs(this.step)); // 时间间隔为整数， 对step求绝对值
@@ -83,10 +83,9 @@ export class CountDown {
       _timePassed = CountDown.ten(parseInt(_timePassed / 24));
       this.onInterval(_timePassed,hour,minute, second);
 
-    } else if (this.countType === 'seconds') {
-
+    } 
+    else if (this.countType === 'seconds') {
       this.onInterval(this.timePassed);
-
     }
 
     isStart && this.auto(); // 是否开始计时
