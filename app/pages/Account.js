@@ -2,9 +2,9 @@ import React from 'react';
 import {ScrollView, View, Text, StyleSheet, ImageBackground} from 'react-native';
 import {Button, Avatar} from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
-import ImagePicker from 'react-native-image-picker';
+// import ImagePicker from 'react-native-image-picker';
 
-import {Config, Request} from 'saytools';
+import {Config, Request, Tools} from 'saytools';
 
 export default class Account extends React.Component {
   constructor(props) {
@@ -12,58 +12,63 @@ export default class Account extends React.Component {
     this.state = {
       user: {}
     };
+    Tools.GetUserData((response)=>{
+      if (response !== undefined) {
+        let user = response;
+        user.avatar = user.avatar || "http://dummyimage.com/1280X720/79f2b2";
+        this.setState({user: user})
+      }
+    })
   }
-
   componentDidMount() {
-    this._CheckUser();
   }
-
 
   render() {
     let user = this.state.user || {};
-    user.avatar = user.avatar || "http://dummyimage.com/1280X720/79f2b2"
-    if (!user.id) {
-      //this.props.navigation.navigate("Register");
-      return (<View>
-        <Text>请先登录</Text>
-        <Toast ref={node => this.Toast = node}/>
-      </View>);
-    }
-
-    else {
-      return (<ScrollView style={styles.container}>
-        <View style={styles.headerView}>
-          <ImageBackground
+    return (<ScrollView style={styles.container}>
+      <View style={styles.headerView}>
+        <ImageBackground
+          source={{uri: user.avatar}}
+          style={styles.backgroundImage}
+        >
+          <Avatar
+            width={Config.Style.DeviceWidth * 0.2}
+            height={Config.Style.DeviceWidth * 0.2}
             source={{uri: user.avatar}}
-            style={styles.backgroundImage}
-          >
-            <Avatar
-              width={Config.Style.DeviceWidth * 0.2}
-              height={Config.Style.DeviceWidth * 0.2}
-              source={{uri: user.avatar}}
-              imageProps={{resizeMode: 'cover'}}
-              activeOpacity={0.7}
-              containerStyle={styles.headerAvatar}
-              onPress={this._pickPhoto}
-              rounded
-            />
-          </ImageBackground>
-        </View>
-        <View style={styles.bodyView}>
-          <Text> 个人信息 </Text>
-          <Toast ref={node => this.Toast = node}/>
-        </View>
-        <View style={styles.signoutView}>
-          <Button title={"退出登录"}
-                  icon={{name: "sign-out", type: "octicon"}}
-                  onPress={() => storage.remove({key: 'user'})}
+            imageProps={{resizeMode: 'cover'}}
+            activeOpacity={0.7}
+            containerStyle={styles.headerAvatar}
+            onPress={this._pickPhoto}
+            rounded
           />
-        </View>
-      </ScrollView>)
-    }
-
+        </ImageBackground>
+      </View>
+      <View style={styles.bodyView}>
+        <Text> 个人信息 </Text>
+      </View>
+      <View style={styles.signoutView}>
+        <Button title={"退出登录"}
+                icon={{name: "sign-out", type: "octicon"}}
+                onPress={this._signOut}
+        />
+      </View>
+      <Toast
+        ref={node => this.ToastComponent = node}
+        position='center'
+      />
+    </ScrollView>)
   }
 
+  //登出事件
+  _signOut = () => {
+    Tools.RemoveUserData(() => {
+      this.ToastComponent.show("退出登录成功!");
+      this.timer = setTimeout(() => {
+        console.log("跳转");
+        this.props.navigation.navigate('Register');
+      }, 500);
+    });
+  }
   //更换Avatar
   _pickPhoto = () => {
     const options = {
@@ -108,29 +113,6 @@ export default class Account extends React.Component {
     });
     //上传照片到图床
   }
-
-  //检测用户是否已登录
-  _CheckUser = () => {
-    //清空user数据 
-    // storage.remove({key: 'user'});
-    storage.load({key: 'user'})
-      .catch(err => {
-        switch (err.name) {
-          case 'NotFoundError':
-          //  this.props.navigation.navigate("Register");
-            break;
-          case 'ExpiredError':
-            break;
-        }
-      })
-      .then(response => {
-        if (response !== undefined) {
-          let user = response;
-          user.avatar = user.avatar || "http://dummyimage.com/1280X720/79f2b2";
-          this.setState({user: user})
-        }
-      });
-  }
 }
 
 const styles = StyleSheet.create({
@@ -158,5 +140,4 @@ const styles = StyleSheet.create({
   signoutView: {
     marginTop: 20
   }
-
 });

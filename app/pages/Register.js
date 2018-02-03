@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput, Alert} from 'react-native';
-import {Button} from 'react-native-elements';
+import {View, StyleSheet, TextInput, Alert} from 'react-native';
+import {Button, Text} from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 
-import {CountDownText, Config, Request} from 'saytools';
+import {CountDownText, Config, Request, Tools} from 'saytools';
 
 export default class Register extends React.Component {
   constructor(props) {
@@ -12,19 +12,20 @@ export default class Register extends React.Component {
       isSendCode: false,
       phoneNumber: "",
       phoneCode: "",
-      logined: false,
       user: {},
     }
-  }
-
-  componentWillMount() {
-    this._getUserInfo();
+    Tools.GetUserData((ret) => {
+      console.log("ret", ret);
+      //跳转到主页中
+      if (ret !== undefined)
+        this.props.navigation.navigate("Tabs");
+    });
   }
 
   render() {
-    this.state.logined && <View></View>;
     return (
       <View style={styles.container}>
+        <Text h2>用户登录</Text>
         <TextInput style={styles.phoneNumber}
                    placeholder="请输入手机号"
                    onChangeText={(val) => this.setState({phoneNumber: val})}
@@ -71,50 +72,6 @@ export default class Register extends React.Component {
       </View>)
   }
 
-  // 获取用户信息
-  async _getUserInfo() {
-    var value = await storage.load({
-      key: 'user',
-    }).catch(err => {
-      console.warn(err.message);
-      switch (err.name) {
-        case 'NotFoundError':
-          // TODO;
-          break;
-        case 'ExpiredError':
-          // TODO
-          break;
-      }
-    }).then(ret => {
-      //跳转到主页中
-      this.props.navigation.navigate("Tabs");
-    })
-
-
-  }
-
-  //保存用户数据 
-  async _saveUserData(data) {
-    if (!data.id)
-      return;
-    let that = this;
-    var value = await storage.save({key: "user", data: data})
-      .catch(err => console.error("保存用户数据失败", err))
-      .then(response => {
-        console.log("response save", response);
-        that.setState({
-          logined: true,
-          user: data
-        }, () => {
-          this.Toast.show("恭喜登录成功!");
-          setTimeout(() => {
-            this.props.navigation.navigate("Tabs");
-          }, 200)
-        })
-      });
-
-  }
-
   //登录
   _register = (e) => {
     e.preventDefault();
@@ -144,7 +101,12 @@ export default class Register extends React.Component {
           ]);
         } else {
           //老用户登录
-          this._saveUserData(response[0]);
+          Tools.SaveUserData(response[0],() => {
+            this.Toast.show("恭喜登录成功!");
+            setTimeout(() => {
+              this.props.navigation.navigate("Tabs");
+            }, 500);
+          })
         }
       })
   };
@@ -157,8 +119,14 @@ export default class Register extends React.Component {
         console.error("注册错误!", error);
       })
       .then(response => {
-        if (response.id)
-          this._saveUserData(response);
+        if (response.id) {
+          Tools.SaveUserData(response,() => {
+            this.Toast.show("注册成功!");
+            setTimeout(() => {
+              this.props.navigation.navigate("Tabs");
+            }, 500);
+          })
+        }
         else
           console.log("注册账户错误,", response);
       })
@@ -175,9 +143,12 @@ const styles = StyleSheet.create({
     // backgroundColor: '#eee',
   },
   phoneNumber: {
+    width: Config.Style.DeviceWidth * 0.8,
     marginRight: 10,
+    marginTop: 10,
   },
   codeView: {
+    width: Config.Style.DeviceWidth * 0.8,
     flexDirection: 'row',
     marginTop: 10,
     marginBottom: 10

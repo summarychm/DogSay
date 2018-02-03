@@ -114,8 +114,6 @@ export default class AccountEdit extends React.Component {
           this.props.navigation.goBack();
         }, 200)*/
       });
-
-
   }
 
 
