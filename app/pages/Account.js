@@ -61,8 +61,7 @@ export default class Account extends React.Component {
       </View>
 
       <View style={styles.bodyView}>
-        <Text> 个人信息 </Text>
-        <Text>{user.phoneNumber}</Text>
+        <Text>已发布的创意视频</Text>
       </View>
       <View style={styles.signoutView}>
         <Button title={"退出登录"}

@@ -35,7 +35,7 @@ export default class AccountEdit extends React.Component {
   }
 
   componentWillUnmount() {
-    this.timer && clearTimeout(this.timer);
+    this.timer && clearTimeout(this.timer);k
   }
 
   render() {

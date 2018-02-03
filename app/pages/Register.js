@@ -14,19 +14,26 @@ export default class Register extends React.Component {
       phoneCode: "",
       user: {},
     }
+    if (this.state.user.id !== undefined) {
+      this.props.navigation.navigate("Tabs");
+    }
   }
 
   componentDidMount() {
     console.log("componentDidMount");
     Tools.GetUserData((ret) => {
       console.log("ret", ret);
-      //跳转到主页中
-      if (ret !== undefined)
-        this.props.navigation.navigate("Tabs");
+      this.setState({user: ret}, () => {
+        //跳转到主页中
+        if (ret !== undefined)
+          this.props.navigation.navigate("Tabs");
+      });
     });
   }
 
   render() {
+    
+
     return (
       <View style={styles.container}>
         <Text h2>用户登录</Text>
