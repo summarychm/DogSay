@@ -12,15 +12,18 @@ function generateCreations() {
       "https://www.w3cschool.cn/statics/demosource/movie.mp4",
       "http://www.zhangxinxu.com/study/media/cat.mp4",
     ];
+    let userData = data.user[_.random(0, data.user.length - 1)];
     data.creations.push(Mock.mock({
       "id": id,
       "thumb": Random.image("1280X720", Random.color()),
       "author": {
-        "avatar": Random.image("1280X720", Random.color()),
-        "nickname": Random.cname()
+        "id": userData.id,
+        "nickname": userData.nickname,
+        "avatar": userData.avatar,
+        "phoneNumber": userData.phoneNumber,
       },
       "title": Random.cparagraph(1, 3),
-      "video": videos[_.random(0, videos.length)],
+      "video": videos[_.random(0, videos.length - 1)],
       "liketotal|10-200": 20,
     }))
   });
@@ -59,8 +62,8 @@ function generateUsers() {
 }
 
 module.exports = () => {
+  generateUsers();
   generateCreations();
   generateCommments();
-  generateUsers();
   return data;
 }
