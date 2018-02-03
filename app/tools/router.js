@@ -18,8 +18,6 @@ const CreationStack = StackNavigator({
     path: '/creation',
     navigationOptions: {
       title: "创意视频",
-      headerStyle: {shadowOpacity: 0, height: 48, backgroundColor: Config.Style.Color_Main},
-      headerTitleStyle: {color: '#fff', fontSize: 16, alignSelf: 'center'},
       headerTintColor: '#eee',
     }
   },
@@ -28,15 +26,13 @@ const CreationStack = StackNavigator({
     path: '/detail',
     navigationOptions: {
       title: "创意详情",
-      headerStyle: {backgroundColor: Config.Style.Color_Main},
       headerTintColor: '#eee',
     }
   }
 }, {
   navigationOptions: {
-    // 屏幕导航的默认选项, 也可以在组件内用 static navigationOptions 设置(会覆盖此处的设置)  
     headerStyle: {shadowOpacity: 0, height: 48, backgroundColor: Config.Style.Color_Main},
-    headerTitleStyle: {color: '#fff', fontSize: 16}, //alignSelf:'center'  文字居中  
+    headerTitleStyle: {color: '#fff', fontSize: 16, alignSelf: 'center'},
     headerBackTitleStyle: {color: '#fff', fontSize: 12},
     gesturesEnabled: true,//是否支持滑动返回收拾，iOS默认支持，安卓默认关闭  
   }
@@ -47,27 +43,10 @@ const AccountStack = StackNavigator({
   Account: {
     screen: Account,
     path: '/account',
-    navigationOptions: ({navigation}) => ({
-      title: "账户详情",
-      headerStyle: {backgroundColor: Config.Style.Color_Main},
-      headerTintColor: '#eee',
-      headerRight: <TouchableHighlight
-        style={{marginRight: 20}}
-        onPress={() => {
-          navigation.navigate("AccountEdit")
-        }}>
-        <Text>编辑</Text>
-      </TouchableHighlight>
-    })
   },
   AccountEdit: {
     screen: AccountEdit,
     path: "/account/edit",
-    navigationOptions: {
-      title: "编辑狗狗信息",
-      headerStyle: {backgroundColor: Config.Style.Color_Main},
-      headerTintColor: '#eee',
-    }
   },
 }, {
   initialRouteName: "Account",
@@ -84,7 +63,7 @@ const AccountStack = StackNavigator({
 const Tabs = TabNavigator({
   CreationStack: {
     screen: CreationStack,
-    tabBarVisible:false, 
+    tabBarVisible: false,
     navigationOptions: {
       tabBarIcon: ({tintColor, focused}) => (
         <Ionicons size={26}
@@ -133,19 +112,17 @@ const Tabs = TabNavigator({
     style: {backgroundColor: "#eee"}
   }
 });
+
 export const AppRouters = StackNavigator({
   Register: {
     screen: Register,
     navigationOptions: {
       title: "登录创意视频",
-      headerStyle: {backgroundColor: Config.Style.Color_Main},
-      headerTintColor: '#eee',
     }
   },
   Tabs: {screen: Tabs}
 }, {
   initialRouteName: "Register",
-  
   navigationOptions: {
     // 屏幕导航的默认选项, 也可以在组件内用 static navigationOptions 设置(会覆盖此处的设置)  
     headerStyle: {shadowOpacity: 0, height: 48, backgroundColor: Config.Style.Color_Main},

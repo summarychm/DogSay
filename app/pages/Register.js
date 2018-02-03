@@ -14,6 +14,10 @@ export default class Register extends React.Component {
       phoneCode: "",
       user: {},
     }
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount");
     Tools.GetUserData((ret) => {
       console.log("ret", ret);
       //跳转到主页中
@@ -101,7 +105,7 @@ export default class Register extends React.Component {
           ]);
         } else {
           //老用户登录
-          Tools.SaveUserData(response[0],() => {
+          Tools.SaveUserData(response[0], () => {
             this.Toast.show("恭喜登录成功!");
             setTimeout(() => {
               this.props.navigation.navigate("Tabs");
@@ -120,7 +124,7 @@ export default class Register extends React.Component {
       })
       .then(response => {
         if (response.id) {
-          Tools.SaveUserData(response,() => {
+          Tools.SaveUserData(response, () => {
             this.Toast.show("注册成功!");
             setTimeout(() => {
               this.props.navigation.navigate("Tabs");

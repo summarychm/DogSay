@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, ImageBackground, TouchableHighlight} from 'react-native';
 import {Button, Avatar} from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 // import ImagePicker from 'react-native-image-picker';
@@ -7,12 +7,24 @@ import Toast from 'react-native-easy-toast';
 import {Config, Request, Tools} from 'saytools';
 
 export default class Account extends React.Component {
+  static navigationOptions = ({navigation}) => ({
+    title: "账户详情",
+    headerTintColor: '#eee',
+    headerRight: <TouchableHighlight
+      style={{marginRight: 20}}
+      onPress={() => {
+        navigation.navigate("AccountEdit")
+      }}>
+      <Text>编辑</Text>
+    </TouchableHighlight>
+  })
+
   constructor(props) {
     super(props);
     this.state = {
       user: {}
     };
-    Tools.GetUserData((response)=>{
+    Tools.GetUserData((response) => {
       if (response !== undefined) {
         let user = response;
         user.avatar = user.avatar || "http://dummyimage.com/1280X720/79f2b2";
@@ -20,31 +32,37 @@ export default class Account extends React.Component {
       }
     })
   }
+
   componentDidMount() {
   }
 
   render() {
     let user = this.state.user || {};
+    console.log("user", user);
     return (<ScrollView style={styles.container}>
       <View style={styles.headerView}>
-        <ImageBackground
+        <Avatar
+          width={Config.Style.DeviceWidth * 0.26}
+          height={Config.Style.DeviceWidth * 0.26}
           source={{uri: user.avatar}}
-          style={styles.backgroundImage}
-        >
-          <Avatar
-            width={Config.Style.DeviceWidth * 0.2}
-            height={Config.Style.DeviceWidth * 0.2}
-            source={{uri: user.avatar}}
-            imageProps={{resizeMode: 'cover'}}
-            activeOpacity={0.7}
-            containerStyle={styles.headerAvatar}
-            onPress={this._pickPhoto}
-            rounded
-          />
-        </ImageBackground>
+          imageProps={{resizeMode: 'cover'}}
+          activeOpacity={0.7}
+          containerStyle={styles.headerAvatar}
+          overlayContainerStyle={{backgroundColor:"#eee"}}
+          onPress={this._pickPhoto}
+          rounded
+        />
+        <View style={styles.headerUserInfo}>
+          <Text>昵称: {user.nickname}</Text>
+          <Text>品种: {user.breed}</Text>
+          <Text>年龄: {user.age}</Text>
+          <Text>性别: {user.sex ? "女" : "男"}</Text>
+        </View>
       </View>
+
       <View style={styles.bodyView}>
         <Text> 个人信息 </Text>
+        <Text>{user.phoneNumber}</Text>
       </View>
       <View style={styles.signoutView}>
         <Button title={"退出登录"}
@@ -118,24 +136,26 @@ export default class Account extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:'#eee'
   },
   headerView: {
-    height: Config.Style.DeviceHeight * 0.26,
-//    backgroundColor: "blue",
-    //justifyContent: 'center',
-    //alignItems: 'center',
-  },
-  backgroundImage: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10,
   },
   headerAvatar: {
-    borderWidth: 2,
+    flex: 1,
+    backgroundColor:'white'
+  },
+  headerUserInfo: {
+    flex: 1,
+    alignSelf: 'flex-start',
+    //backgroundColor: "#cc0"
   },
   bodyView: {
     flex: 5,
-    backgroundColor: "blue",
+    backgroundColor: "#ccc",
   },
   signoutView: {
     marginTop: 20
