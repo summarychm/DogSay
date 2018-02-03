@@ -2,7 +2,7 @@
  * Created by Jsonz on 2017/6/2.
  */
 
-export class CountDown {
+export  class CountDown {
 
   constructor(props) {
     this.setData(props);
@@ -53,18 +53,21 @@ export class CountDown {
     if (!this.timeLeft) {
       this.timeLeft = Math.floor(CountDown.getSeconds(this.endTime) - CountDown.getSeconds(this.startTime));
     }
+
+   // this.refreshTime(true);
   }
 
   // 周期启动更新时间
   auto() {
 
     this.timerId = setTimeout(()=> {
+      console.log("setTimeout");
       // 倒计时到0停止计时
       if (this.timePassed <= 0 && this.step < 0) return this.end();
-      console.log("log"); 
+      
       this.refreshTime(true);
 
-    }, 1000 * Math.abs(this.step)); // 时间间隔为整数， 对step求绝对值
+    }, 4*1000 * Math.abs(this.step)); // 时间间隔为整数， 对step求绝对值
 
   }
 
@@ -83,9 +86,10 @@ export class CountDown {
       _timePassed = CountDown.ten(parseInt(_timePassed / 24));
       this.onInterval(_timePassed,hour,minute, second);
 
-    } 
-    else if (this.countType === 'seconds') {
+    } else if (this.countType === 'seconds') {
+
       this.onInterval(this.timePassed);
+
     }
 
     isStart && this.auto(); // 是否开始计时

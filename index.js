@@ -1,4 +1,5 @@
-import {AppRegistry} from 'react-native';
+import React from 'react';
+import {View, AppRegistry} from 'react-native';
 
 //import Entry from './app/index';
 import {AppRouters} from './app/tools/router';
@@ -15,6 +16,7 @@ let storage = new Storage({
   enableCache: true,
 });
 global.storage = storage;
+
 
 //屏蔽Remote debugger is in a background tab的警告提示 
 console.ignoredYellowBox = ['Remote debugger'];

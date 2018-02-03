@@ -12,7 +12,7 @@ function generateCreations() {
       "https://www.w3cschool.cn/statics/demosource/movie.mp4",
       "http://www.zhangxinxu.com/study/media/cat.mp4",
     ];
-    let userData = data.user[_.random(0, data.user.length - 1)];
+    let userData = data.users[_.random(0, data.users.length - 1)];
     data.creations.push(Mock.mock({
       "id": id,
       "thumb": Random.image("1280X720", Random.color()),
@@ -48,10 +48,10 @@ function generateCommments() {
 
 //创建虚拟用户
 function generateUsers() {
-  data.user = [];
+  data.users = [];
   _.times(10, (i) => {
     let id = Random.increment();
-    data.user.push(Mock.mock({
+    data.users.push(Mock.mock({
       "id": id,
       "phoneNumber|13012345600-13012345900": 1,
       "avatar": Random.image('1280X720', Random.color()),

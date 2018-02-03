@@ -10,8 +10,8 @@ export default class Register extends React.Component {
     super(props);
     this.state = {
       isSendCode: false,
-      phoneNumber: "",
-      phoneCode: "",
+      phoneNumber: "13012345827",
+      phoneCode: "1234",
       user: {},
     }
     if (this.state.user.id !== undefined) {
@@ -41,10 +41,12 @@ export default class Register extends React.Component {
                    placeholder="请输入手机号"
                    onChangeText={(val) => this.setState({phoneNumber: val})}
                    keyboardType="numeric"
+                   value={this.state.phoneNumber}
         />
         <View style={styles.codeView}>
           <TextInput style={styles.phoneCode}
                      onChangeText={(val) => this.setState({phoneCode: val})}
+                     value={this.state.phoneCode}
           />
           <View style={styles.countDown}>
             {this.state.isSendCode ?
@@ -71,6 +73,7 @@ export default class Register extends React.Component {
             }
           </View>
         </View>
+        
         <Button
           title="登录"
           buttonStyle={styles.registerButton}

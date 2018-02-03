@@ -100,7 +100,7 @@ const Tabs = TabNavigator({
     }
   },
 }, {
-  initialRouteName: 'AccountStack',
+  initialRouteName: 'CreationStack',
   tabBarPosition: "bottom",
   animationEnabled: true,
   tabBarOptions: {

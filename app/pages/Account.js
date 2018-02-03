@@ -1,10 +1,12 @@
 import React from 'react';
-import {ScrollView, View, Text, StyleSheet, ImageBackground, TouchableHighlight} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import {Button, Avatar} from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 // import ImagePicker from 'react-native-image-picker';
 
 import {Config, Request, Tools} from 'saytools';
+import AccountCreationList from './Components/AccountCreationList';
+
 
 export default class Account extends React.Component {
   static navigationOptions = ({navigation}) => ({
@@ -24,6 +26,10 @@ export default class Account extends React.Component {
     this.state = {
       user: {}
     };
+    
+  }
+
+  componentDidMount() {
     Tools.GetUserData((response) => {
       if (response !== undefined) {
         let user = response;
@@ -31,9 +37,6 @@ export default class Account extends React.Component {
         this.setState({user: user})
       }
     })
-  }
-
-  componentDidMount() {
   }
 
   render() {
@@ -59,10 +62,9 @@ export default class Account extends React.Component {
           <Text>性别: {user.sex ? "女" : "男"}</Text>
         </View>
       </View>
-
-      <View style={styles.bodyView}>
-        <Text>已发布的创意视频</Text>
-      </View>
+      
+      <AccountCreationList navigation={this.props.navigation} />
+      
       <View style={styles.signoutView}>
         <Button title={"退出登录"}
                 icon={{name: "sign-out", type: "octicon"}}

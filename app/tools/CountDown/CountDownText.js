@@ -1,3 +1,8 @@
+/**
+ * Created by Jsonz on 2017/6/3.
+ */
+
+
 import React, {Component} from 'react';
 import {
   Text
@@ -6,18 +11,6 @@ import {CountDown} from './CountDown';
 
 
 export class CountDownText extends Component {
-  static defaultProps = {
-    countType: 'seconds', // 计时类型：seconds / date
-    onEnd: null, // 结束回调
-    timeLeft: 0, // 正向计时 时间起点为0秒
-    step: -1, //计时步长，以秒为单位，正数则为正计时，负数为倒计时
-    startText: null, //  开始的文本
-    endText: null, // 结束的文本
-    intervalText: null, //  定时的文本回调
-    auto: false, // 自动开始
-    afterEnd: () => { // 结束回调
-    },
-  };
 
   constructor(props) {
     super(props);
@@ -27,15 +20,14 @@ export class CountDownText extends Component {
     };
   }
 
-  counter = null; //定时器
+  counter= null;
 
-  //是否到时
   static isTimeEquals(t1, t2) {
     return Math.abs(t1 - t2) < 2;
   }
 
-  // 组件接收到新的props时调用
   componentWillReceiveProps(nextProps) {
+
     let updating = true;
 
     // 倒计时的情况
@@ -58,6 +50,7 @@ export class CountDownText extends Component {
         onInterval: this.onInterval.bind(this),
         onEnd: this.onEnd.bind(this),
       }));
+
       if (nextProps.auto) {
         this.start();
       }
@@ -65,7 +58,8 @@ export class CountDownText extends Component {
   }
 
   componentDidMount() {
-    this.counter = new CountDown(Object.assign({}, this.props, {
+
+    this.counter =  new CountDown(Object.assign({}, this.props, {
       onInterval: this.onInterval.bind(this),
       onEnd: this.onEnd.bind(this),
     }));
@@ -74,7 +68,7 @@ export class CountDownText extends Component {
       return this.end();
     }
 
-    this.props.auto && this.start();
+    if (this.props.auto) this.start();
 
   }
 
@@ -117,3 +111,17 @@ export class CountDownText extends Component {
   }
 
 }
+
+CountDownText.defaultProps = {
+  countType: 'seconds',
+  onEnd: null,
+  timeLeft: 0,
+  step: -1,
+  startText: null,
+  intervalText: null,
+  endText: null,
+  auto: false,
+  afterEnd: ()=> {},
+};
+
+
