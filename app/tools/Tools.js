@@ -8,7 +8,7 @@ export class Tools {
 
   // 获取用户信息
   static async GetUserData(fn) {
-    await storage.load({
+   return await storage.load({
       key: 'user',
     }).catch(err => { /*console.warn(err.name,err.message);*/
     }).then(ret => {
@@ -18,10 +18,10 @@ export class Tools {
   }
 
   //保存用户数据 
-  static async SaveUserData(data, fn) {
+  static SaveUserData(data, fn) {
     if (!data.id)
       return;
-    var value = await storage.save({key: 'user', data: data})
+    storage.save({key: 'user', data: data})
       .catch(err => {
         console.error("保存用户数据失败", err);
       })
