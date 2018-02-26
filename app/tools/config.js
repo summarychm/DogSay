@@ -1,6 +1,6 @@
 import {Dimensions} from 'react-native';
 
-const BASE_URL = "http://192.168.2.106:6001";
+const BASE_URL = "http://192.168.1.9:6001";
 //const BASE_URL = "http://192.168.45.74:6001";
 export const Config = {
     accessToken: "1517151608876",

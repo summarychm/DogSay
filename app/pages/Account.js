@@ -2,7 +2,7 @@ import React from 'react';
 import {ScrollView, View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import {Button, Avatar} from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
-// import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-picker';
 
 import {Config, Request, Tools} from 'saytools';
 import AccountCreationList from './Components/AccountCreationList';
